@@ -1,5 +1,8 @@
 import { Router } from 'express';
+import { authenticateMiddleware } from '../../middleware/auth.middleware';
+import { validateRequestMiddleware } from '../../middleware/error.middleware';
 import DepartmentController from './department.controller';
+import { addDepartmentSchema } from './department.model';
 
 class DepartmentRoute {
   path = '/department';
@@ -14,7 +17,7 @@ class DepartmentRoute {
   }
 
   initializeRoutes() {
-    this.router.get(`${this.path}`, this.departmentController.signUpUser);
+    this.router.post(`${this.path}/create`, authenticateMiddleware.authorize, validateRequestMiddleware(addDepartmentSchema), this.departmentController.create);
   }
 }
 export default DepartmentRoute;

@@ -1,8 +1,4 @@
 import * as crypto from 'crypto';
-import { promisify } from 'util';
-
-const scrypt = promisify(crypto.scrypt);
-
 export const encap = {
   salt: crypto.randomBytes(8).toString('hex'),
   hash: (password: string): Promise<string> => {

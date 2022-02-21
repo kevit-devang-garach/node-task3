@@ -16,3 +16,5 @@ import { encap } from './services/helper';
 const app = new App([new DepartmentRoute(), new StaffRoute()]);
 
 app.listen();
+
+export default app;

@@ -1,15 +1,16 @@
-import jwt from 'jsonwebtoken';
-import { Schema, model } from 'mongoose';
+// import jwt from 'jsonwebtoken';
+import { Document, Model, model, Schema } from 'mongoose';
+
 import { encap } from '../../services/helper';
 import Config from '../../environments/index';
-// import HttpException from '../../utils/error.utils';
+import HttpException from '../../utils/error.utils';
+import { DEPARTMENT_ERROR_CODES } from './department.error';
 
-// const { Schema, model } = mongoose;
 // ===================================
 // Validate requests
 // ===================================
 
-export const addDepartment = {
+export const addDepartmentSchema = {
     name: {
         isString: true,
         isLength:{
@@ -17,6 +18,14 @@ export const addDepartment = {
         },
         errorMessage: 'Department name is required in request'
     }
+}
+
+interface DepartmentDocument extends Document {
+    name : string;
+}
+
+interface DepartmentModel extends Model<DepartmentDocument>{
+
 }
 
 // ===================================
@@ -41,13 +50,13 @@ const departmentSchema = new Schema({
 // ===================================
 // Pre hook before saving it execute
 // ===================================
-departmentSchema.pre('save', async (next) => {
-    const user: any = this;
-    if(user.isModified('password')){
-        user.password = await encap.hash(user.password);
-    }
-    next();
-});
+// departmentSchema.pre('save', async (next) => {
+//     const user: any = this;
+//     if(user.isModified('password')){
+//         user.password = await encap.hash(user.password);
+//     }
+//     next();
+// });
 
-const Departments = model('departments', departmentSchema)
+const Departments: DepartmentModel = model<DepartmentDocument, DepartmentModel>('departments', departmentSchema)
 export default Departments;

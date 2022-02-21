@@ -1,7 +1,7 @@
 import { Response, Request, NextFunction } from 'express';
 
-// import { checkSchema, validationResult } from 'express-validator';
-// import HttpException from '../utils/error.utils';
+import { checkSchema, validationResult } from 'express-validator';
+import HttpException from '../utils/error.utils';
 
 export const errorMiddleware = (err: any, req: Request, res: Response, next: NextFunction) => {
   try {
@@ -40,3 +40,18 @@ export const errorMiddleware = (err: any, req: Request, res: Response, next: Nex
     next(error);
   }
 };
+
+export function validateRequestMiddleware(schema: any) {
+  return async (req: Request, res: Response, next: NextFunction) => {
+      await checkSchema(schema).run(req);
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+          next(
+              new HttpException(400, 'Middleware validation fail', 'MIDDLWARE_VALIDATION_ERROR', null, {
+                  ...errors,
+              }),
+          );
+      }
+      next();
+  };
+}

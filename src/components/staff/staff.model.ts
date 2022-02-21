@@ -1,26 +1,21 @@
 import jwt from 'jsonwebtoken';
-import { Document, Model, model, Types, Schema, Query } from 'mongoose';
+import { Document, Model, model, Schema } from 'mongoose';
 
 import { encap } from '../../services/helper';
 import Config from '../../environments/index';
 import HttpException from '../../utils/error.utils';
 import { USER_ERROR_CODES } from './staff.error';
 
-// import Member from './staff.interface';
-
-// import HttpException from '../../utils/error.utils';
-
-// const { Schema, model } = mongoose;
 // ===================================
 // Validate requests
 // ===================================
-interface Member extends Document  {
+export interface Member extends Document  {
   name: string;
   department: string;
   email: string;
   password: string;
-  findByToken: (token: string) => any;
 }
+
 export const signUpUserSchema = {
   name: {
     isString: true,
@@ -30,13 +25,13 @@ export const signUpUserSchema = {
     errorMessage: 'First name is required in request',
   },
   department: {
-    isIn: ['EC', 'CE', 'MCA', 'admin'],
+    isIn: ['EC', 'CE', 'MCA', 'IT','admin'],
     isLength: {
       options: { min: 3 },
     },
     errorMessage: 'Department short name is required',
   },
-  emailId: {
+  email: {
     isEmail: true,
     errorMessage: 'Please enter valid email',
   },
@@ -70,10 +65,11 @@ export interface UserDocument extends Member{
   isActive: boolean;
 }
 export interface UserModel extends Model<UserDocument>{
-    findByToken(token:string): any
+    findByToken(token:string): any;
+    findByCredentials(email: string, password: string): any;
 }
 
-const staffSchema = new Schema<UserDocument, UserModel>(
+const staffSchema: Schema = new Schema(
   {
     name: {
       type: Schema.Types.String,
@@ -118,14 +114,14 @@ staffSchema.methods.getAuthToken = async function () {
   });
   console.log('token', token, typeof token);
   user.accessToken = token;
-  await user.save();
+  // await user.save();
   return token;
 };
 
 // ===================================
 // find Staff member by token
 // ===================================
-staffSchema.statics.findByToken = function (token: string): Object {
+staffSchema.statics.findByToken = function (token: string): any {
   let decoded;
   try {
     decoded = jwt.verify(token, Config.JWT_PUBLIC_KEY);
@@ -146,6 +142,42 @@ staffSchema.statics.findByToken = function (token: string): Object {
   });
 };
 
+staffSchema.statics.findByCredentials = async function (email, password) {
+  const user = await this.findOne({ emailId: email });
+  if (!user) {
+      throw new HttpException(404, USER_ERROR_CODES.USER_NOT_FOUND, 'USER_NOT_FOUND', null, {
+          emailId: email,
+      });
+  }
+
+  const res = await encap.verify(password, user.password);
+
+  if (res === true) {
+      return user;
+  }
+  throw new HttpException(404, USER_ERROR_CODES.INCORRECT_PASSWORD, 'INCORRECT_PASSWORD', null, '');
+};
+// staffSchema.static('findByToken', function(token: string): Object {
+//   let decoded;
+//   try {
+//     decoded = jwt.verify(token, Config.JWT_PUBLIC_KEY);
+//     console.log('decoded after jwt verify', decoded);
+//   } catch (err: any) {
+//     console.log('err type', typeof err);
+//     let hasSessionExpired = false;
+//     if (err && err.message && err.message.includes('JWT Expired')) {
+//       hasSessionExpired = true;
+//     }
+//     if (hasSessionExpired)
+//       throw new HttpException(404, USER_ERROR_CODES.USER_SESSION_EXPIRED, 'USER_SESSION_EXPIRED', null, '');
+//     else throw new HttpException(404, USER_ERROR_CODES.AUTH_FAILED, 'AUTH_FAILED', null, '');
+//   }
+//   return this.findOne({
+//     _id: decoded,
+//     accessToken: token,
+//   });
+// });
+
 // ===================================
 // Pre hook before saving it execute
 // ===================================
@@ -161,5 +193,5 @@ staffSchema.pre('save', async function (next) {
   next();
 });
 
-const Staff = model('staff', staffSchema);
+const Staff:UserModel = model<UserDocument, UserModel>('staff', staffSchema);
 export default Staff;
