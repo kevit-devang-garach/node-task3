@@ -1,0 +1,45 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo 'Styling, testing and building your project before comitting'
+
+# Formating all files
+echo 'Formating all files using Prettier'
+npm run format
+
+# Check tsconfig standards
+npm run check-types ||
+(
+    echo 'Failed type check,
+    Are you seriously trying to write that? Make the changes required above';
+    false;
+)
+
+# Check Prettier standards
+npm run check-format ||
+(
+    echo 'Your styling looks weird,
+    Prettier check failed. Execute npm run format, add changes and try commit again';
+    false;
+)
+
+# Check ESLint standards
+npm run check-lint ||
+(
+    echo 'Your missed something needs to be fixed,
+    ESLint check failed. Make the required changes listed above, add changes and try commit again';
+    false;
+)
+
+# If everythin passes... try to run build
+echo 'Alright.. Code looks good... Trying to build...'
+
+# Check build done success
+npm run build ||
+(
+    echo 'Better call the devang, Because your build failed,
+         tsc build failed, View the errors above to see why.';
+    false;
+)
+
+# npm test
