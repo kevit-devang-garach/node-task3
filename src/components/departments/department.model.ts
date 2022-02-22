@@ -40,8 +40,15 @@ const departmentSchema = new Schema({
     },
     batches:[
         {
-            year: Schema.Types.Number,
-            totalIntake: Schema.Types.Number
+            year: {
+                type: Schema.Types.Number,
+                required: true,
+                unique: true
+            },
+            totalIntake: {
+                type: Schema.Types.Number,
+                default: 0
+            }
         }
     ],
     isActive: {
@@ -63,16 +70,6 @@ departmentSchema.statics.findByDepartment = async function (name) {
     
     return department;
   };
-// ===================================
-// Pre hook before saving it execute
-// ===================================
-// departmentSchema.pre('save', async (next) => {
-//     const user: any = this;
-//     if(user.isModified('password')){
-//         user.password = await encap.hash(user.password);
-//     }
-//     next();
-// });
 
 const Departments: DepartmentModel = model<DepartmentDocument, DepartmentModel>('departments', departmentSchema)
 export default Departments;
