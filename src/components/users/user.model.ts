@@ -151,16 +151,19 @@ userSchema.statics.findByCredentials = async function (email, password) {
   console.log("valid user",user)
   if (!user) {
       throw new HttpException(404, USER_ERROR_CODES.USER_NOT_FOUND, 'USER_NOT_FOUND', null, {
-          emailId: email,
+          email: email,
       });
   }
-
+  if(user && !user.isActive){
+    console.log("inside if")
+    throw new HttpException(404, USER_ERROR_CODES.USER_NOT_AUTHROIZED, 'USER_NOT_AUTHROIZED', null, null);
+  }
   const res = await encap.verify(password, user.password);
   console.log("verify result", res)
   if (res === true) {
       return user;
   }
-  throw new HttpException(404, USER_ERROR_CODES.INCORRECT_PASSWORD, 'INCORRECT_PASSWORD', null, '');
+  throw new HttpException(404, USER_ERROR_CODES.INCORRECT_PASSWORD, 'INCORRECT_PASSWORD', null, null);
 };
 // userSchema.static('findByToken', function(token: string): any {
 //   let decoded;

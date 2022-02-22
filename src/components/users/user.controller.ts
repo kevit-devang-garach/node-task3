@@ -34,10 +34,7 @@ class UserController {
       }
       const user = await User.findByCredentials(email, password);
       console.log("user result",user)
-      if(req && req.user && !req.user.isActive){
-        console.log("inside if")
-        throw Error("USER IS NOT AUTHORIZED")
-      }
+      
       if(!user){
         throw new HttpException(404, USER_ERROR_CODES.SIGN_IN_FAIL, 'SIGN_IN_FAIL', null, '');
       }

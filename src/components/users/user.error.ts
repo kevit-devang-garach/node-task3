@@ -7,6 +7,7 @@ export const USER_ERROR_CODES = {
   INCORRECT_PASSWORD: 'Password incorrect',
   USER_SESSION_EXPIRED: 'User login timeout',
   AUTH_FAILED: 'Auth failed',
+  USER_NOT_AUTHROIZED: 'User is not Authorized, please contact the admin',
   BAD_REQUEST_FOR_UPLOAD_PROFILE_PHOTO: 'Some imported parameter missing in upload request',
   UPLOAD_PROFILE_IMAGE_FAILED: 'Something went wrong while update profile picture',
 
