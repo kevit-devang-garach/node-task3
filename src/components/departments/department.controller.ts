@@ -6,17 +6,23 @@ import Departments, { addDepartmentSchema } from './department.model';
 class DepartmentController {
   async create(req: Request, res: Response, next: NextFunction) {
     console.log('keys:', Object.keys(req));
-    console.log('department req', req);
+    console.log('department req', req.user);
     try {
       console.log(typeof req, typeof res, typeof next);
-      const { name } = req.body;
-      const departmentObject = { name } ;
+      const { name, startDate, isActive } = req.body;
+      if(req && req.user && (!req.user.isActive || !req.user.isAdmin)){
+        console.log("inside if")
+        throw Error("USER IS NOT AUTHORIZED")
+      }
+      const departmentObject = { name, startDate, isActive } ;
+      console.log("departmentcontroller try");
       const department = await createNewDepartment(departmentObject)
-      return res.status(200).json({ _id: department._id });
+      console.log("departmentcontroller after await create new department");
+      return res.status(201).send(department);
     } catch (err) {
       console.log('error: ', err);
+      return next(err);
     }
-    return null;
   }
 }
 export default DepartmentController;

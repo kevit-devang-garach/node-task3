@@ -1,6 +1,6 @@
 import request from 'supertest';
 import app  from '../../server';
-import Staff from './staff.model';
+import Staff from './user.model';
 const { userOne } = require('../../../test/db');
 
 test('Should login existing user', async () => {

@@ -1,6 +1,6 @@
 import App from './app';
 import DepartmentRoute from './components/departments/department.routes';
-import StaffRoute from './components/staff/staff.routes';
+import UserRoute from './components/users/user.routes';
 
 import { encap } from './services/helper';
 
@@ -13,7 +13,7 @@ import { encap } from './services/helper';
 //     // password 1 & 2 both will be same as we're using same salt
 //     console.log("password1 == password2", password1 == password2, password1,password2);
 // })()
-const app = new App([new DepartmentRoute(), new StaffRoute()]);
+const app = new App([new DepartmentRoute(), new UserRoute()]);
 
 app.listen();
 

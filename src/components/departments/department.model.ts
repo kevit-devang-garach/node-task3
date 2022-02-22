@@ -14,13 +14,13 @@ export const addDepartmentSchema = {
     name: {
         isString: true,
         isLength:{
-            options: {min:3}
+            options: {min:2}
         },
         errorMessage: 'Department name is required in request'
     }
 }
 
-interface DepartmentDocument extends Document {
+export interface DepartmentDocument extends Document {
     name : string;
 }
 
@@ -35,6 +35,7 @@ interface DepartmentModel extends Model<DepartmentDocument>{
 const departmentSchema = new Schema({
     name:{
         type: Schema.Types.String,
+        unique: true,
         required: true,
     },
     startDate: {

@@ -18,6 +18,18 @@ import { errorMiddleware } from './middleware/error.middleware';
 //     "contact":1
 // } as const
 
+declare global{
+  namespace Express {
+    export interface Request {
+        user: any;
+        token: any;
+    }
+    export interface Response {
+        user: any;
+        token: any;
+    }
+  }
+}
 class App {
   public app: express.Application;
 

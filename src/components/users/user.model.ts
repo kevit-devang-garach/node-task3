@@ -4,31 +4,23 @@ import { Document, Model, model, Schema } from 'mongoose';
 import { encap } from '../../services/helper';
 import Config from '../../environments/index';
 import HttpException from '../../utils/error.utils';
-import { USER_ERROR_CODES } from './staff.error';
+import { USER_ERROR_CODES } from './user.error';
 
 // ===================================
 // Validate requests
 // ===================================
-export interface Member extends Document  {
-  name: string;
-  department: string;
-  email: string;
-  password: string;
-}
 
 export const signUpUserSchema = {
   name: {
-    isString: true,
     isLength: {
       options: { min: 3 },
     },
-    errorMessage: 'First name is required in request',
+    errorMessage: 'First name is member name is required',
   },
+  // Getting error when is use isIn, even if field is present in postman with proper value 
   department: {
-    isIn: ['EC', 'CE', 'MCA', 'IT','admin'],
-    isLength: {
-      options: { min: 3 },
-    },
+    isString: true,
+    // isIn : ['staff','admin','MCA'],
     errorMessage: 'Department short name is required',
   },
   email: {
@@ -43,7 +35,7 @@ export const signUpUserSchema = {
       },
     },
     errorMessage: 'Please enter strong passord',
-  },
+  }
 };
 
 export const signInUserSchema = {
@@ -60,16 +52,23 @@ export const signInUserSchema = {
 // ===================================
 // Staff schema to store in databreturn this.findOne({
 // ===================================
-export interface UserDocument extends Member{
+export interface UserDocument extends Document{
+  name: string;
+  department: string;
+  email: string;
+  password: string;
   joinDate: Date | number;
+  isAdmin: boolean;
   isActive: boolean;
+  
 }
 export interface UserModel extends Model<UserDocument>{
-    findByToken(token:string): any;
-    findByCredentials(email: string, password: string): any;
+  findByCredentials(email: string, password: string): any;
+  findByToken(token:string): any;
+  toJSON(): any;
 }
 
-const staffSchema: Schema = new Schema(
+const userSchema: Schema = new Schema(
   {
     name: {
       type: Schema.Types.String,
@@ -77,12 +76,18 @@ const staffSchema: Schema = new Schema(
     },
     email: {
       type: Schema.Types.String,
+      unique: true,
       required: true,
     },
     department: {
+      enum : ['CE','admin','MCA'],
       type: Schema.Types.String,
       // ref: 'deparments',
-      required: true,
+      default: 'MCA'
+    },
+    isAdmin: {
+      type: Schema.Types.Boolean,
+      default:false
     },
     password: {
       type: Schema.Types.String,
@@ -103,14 +108,13 @@ const staffSchema: Schema = new Schema(
 // ===================================
 // General auth token method
 // ===================================
-staffSchema.methods.getAuthToken = async function () {
+userSchema.methods.getAuthToken = async function () {
   const  user = this;
   console.log('user auth', user);
   console.log('user id Hex String', user._id.toHexString());
   console.log('user id String', user._id.toString());
-  const token = jwt.sign({ _id: user._id.toHexString() }, Config.JWT_PRIVATE_KEY, {
-    expiresIn: '3d',
-    algorithm: 'RS256',
+  const token = jwt.sign({ _id: user._id.toHexString() }, Config.JWT_AUTH, {
+    expiresIn: '3d'
   });
   console.log('token', token, typeof token);
   user.accessToken = token;
@@ -119,31 +123,32 @@ staffSchema.methods.getAuthToken = async function () {
 };
 
 // ===================================
-// find Staff member by token
+// find User member by token
 // ===================================
-staffSchema.statics.findByToken = function (token: string): any {
-  let decoded;
+userSchema.statics.findByToken = async function (token) {
+  let decoded: any;
   try {
-    decoded = jwt.verify(token, Config.JWT_PUBLIC_KEY);
-    console.log('decoded after jwt verify', decoded);
+      decoded = jwt.verify(token, Config.JWT_AUTH);
   } catch (err: any) {
-    console.log('err type', typeof err);
-    let hasSessionExpired = false;
-    if (err && err.message && err.message.includes('JWT Expired')) {
-      hasSessionExpired = true;
-    }
-    if (hasSessionExpired)
-      throw new HttpException(404, USER_ERROR_CODES.USER_SESSION_EXPIRED, 'USER_SESSION_EXPIRED', null, '');
-    else throw new HttpException(404, USER_ERROR_CODES.AUTH_FAILED, 'AUTH_FAILED', null, '');
+      let hasSessionExpired = false;
+      if (err && err.message && err.message.includes('jwt expired')) {
+          hasSessionExpired = true;
+      }
+      if (hasSessionExpired) {
+          throw new HttpException(404, USER_ERROR_CODES.USER_SESSION_EXPIRED, 'USER_SESSION_EXPIRED', null,'');
+      } else {
+          throw new HttpException(404, USER_ERROR_CODES.AUTH_FAILED, 'AUTH_FAILED', null,'');
+      }
   }
   return this.findOne({
-    _id: decoded,
-    accessToken: token,
+      _id: decoded._id
   });
 };
 
-staffSchema.statics.findByCredentials = async function (email, password) {
-  const user = await this.findOne({ emailId: email });
+userSchema.statics.findByCredentials = async function (email, password) {
+  console.log("inside find by credentials, email , password", email, password)
+  const user = await this.findOne({ email: email });
+  console.log("valid user",user)
   if (!user) {
       throw new HttpException(404, USER_ERROR_CODES.USER_NOT_FOUND, 'USER_NOT_FOUND', null, {
           emailId: email,
@@ -151,13 +156,13 @@ staffSchema.statics.findByCredentials = async function (email, password) {
   }
 
   const res = await encap.verify(password, user.password);
-
+  console.log("verify result", res)
   if (res === true) {
       return user;
   }
   throw new HttpException(404, USER_ERROR_CODES.INCORRECT_PASSWORD, 'INCORRECT_PASSWORD', null, '');
 };
-// staffSchema.static('findByToken', function(token: string): Object {
+// userSchema.static('findByToken', function(token: string): any {
 //   let decoded;
 //   try {
 //     decoded = jwt.verify(token, Config.JWT_PUBLIC_KEY);
@@ -181,10 +186,10 @@ staffSchema.statics.findByCredentials = async function (email, password) {
 // ===================================
 // Pre hook before saving it execute
 // ===================================
-staffSchema.pre('save', async function (next) {
+userSchema.pre('save', async function (next) {
   const user: any = this;
   console.log('user inside pre', user);
-  console.log('user inside pre save', user);
+  // console.log('user inside pre save', user);
   if (user.isModified('password')) {
     console.log('user.password before hash', user.password);
     user.password = await encap.hash(user.password);
@@ -193,5 +198,16 @@ staffSchema.pre('save', async function (next) {
   next();
 });
 
-const Staff:UserModel = model<UserDocument, UserModel>('staff', staffSchema);
-export default Staff;
+userSchema.methods.toJSON = function(){
+  const user = this;
+  // console.log("user u",user);
+  const userObject = user.toObject();
+  // console.log("userObject",userObject)
+  delete userObject.password;
+  delete userObject.avatar;
+  // console.log("after update",userObject)
+  return userObject;
+}
+
+const User:UserModel = model<UserDocument, UserModel>('users', userSchema);
+export default User;

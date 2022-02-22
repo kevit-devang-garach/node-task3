@@ -14,4 +14,5 @@ export const env = cleanEnv(process.env, {
     default: 'mongodb://localhost:27017/ERP-POC',
   }),
   DEBUG_MODE: bool({ default: false }),
+  JWT_AUTH_KEY: str()
 });

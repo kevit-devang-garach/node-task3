@@ -11,9 +11,9 @@ const environment = {
 
   /* DATABASE */
   MONGODB_URL: env.MONGODB_URL,
+  JWT_AUTH: env.JWT_AUTH_KEY,
   JWT_PRIVATE_KEY: jwtPrivateKey,
   JWT_PUBLIC_KEY: jwtPublicKey,
-
   /* DEBUG CONFIG */
   DEBUG_MODE: env.DEBUG_MODE,
 };
