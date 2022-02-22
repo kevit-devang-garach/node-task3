@@ -11,7 +11,7 @@ export const DEPARTMENT_ERROR_CODES = {
     UPLOAD_PROFILE_IMAGE_FAILED: 'Something went wrong while update profile picture',
   
     // User DAL error codes
-    CREATE_USER_UNHANDLED_IN_DB: 'Something went wrong while creating new user',
+    CREATE_DEPT_UNHANDLED_IN_DB: 'Something went wrong while creating new department',
   };
   export default {
     DEPARTMENT_ERROR_CODES,
