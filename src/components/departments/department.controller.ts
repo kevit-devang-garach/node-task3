@@ -1,6 +1,6 @@
 import { Response, Request, NextFunction } from 'express';
 import HttpException from '../../utils/error.utils';
-import { createNewDepartment } from './department.DAL';
+import { createNewDepartment, findDepartmentById, updateDepartment } from './department.DAL';
 import { DEPARTMENT_ERROR_CODES } from './department.error';
 import Departments, { addDepartmentSchema } from './department.model';
 class DepartmentController {
@@ -26,7 +26,7 @@ class DepartmentController {
   }
   async update(req: Request, res: Response, next: NextFunction) {
     console.log("update req", req.body);
-    const updates = Object.keys(req.body);
+    const updates: Array<string> = Object.keys(req.body);
     const allowedUpdates = ["batches","isActive","name"];
     const updateMatch = updates.every((updates) => allowedUpdates.includes(updates))
     console.log("updateMatch",updateMatch)
@@ -42,18 +42,33 @@ class DepartmentController {
       let department = await Departments.findByDepartment(req.body.name)
       console.log("department before update", department);
 
-      // 22 Feb 2022, leavnig code changes here, still batches.year exist or not checking required
-      updates.forEach((update) => {
-        if(update !== 'batches'){
-          department[update] = req.body[update]
+      // 22 Feb 2022, leaving code changes here, still batches.year exist or not checking required
+      let flag: boolean = false;
+      let result;
+      for(let batchNo = 0; batchNo < department.batches.length; batchNo++ ){
+        console.log("inside for loop");
+        console.log("update type",typeof department.batches[batchNo])
+        console.log('update value', department.batches[batchNo])
+        console.log("checking year equality",department.batches[batchNo].year, req.body.batches.year)
+        if(department.batches[batchNo].year === (req && req.body && req.body.batches.year)){
+          console.log("inside if block");
+          console.log("department.batches[batchNo].year", department.batches[batchNo].year, "req.body.year",req.body.batches.year);
+          result = await updateDepartment(req.body);
+          flag = true;
+          console.log("result",result, typeof result, "flag",flag);
         }
-        else{
-          department[update].push(req.body[update])
-        }
-      });
-      console.log("department updated",department);
-      await department.save();
-      return res.status(200).send(department);
+      }
+
+      console.log("outside foreach loop", flag)
+
+      if(!flag){
+        department.batches.push(req.body.batches)
+        await department.save();
+        return res.status(200).send({batch: req.body, message: "batch not found added successfully"});
+      }
+      else{
+        return res.status(200).send({batch:req.body, message: "batch updated successfully"});
+      }
     }
     catch(err){
       console.log('error: ', err);

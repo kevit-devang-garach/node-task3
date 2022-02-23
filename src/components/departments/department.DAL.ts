@@ -19,3 +19,15 @@ export async function findDepartmentById(departmentId: any){
     throw new HttpException(500, DEPARTMENT_ERROR_CODES.DEPARTMENT_NOT_FOUND,'DEPARTMENT_NOT_FOUND', err, null);
   }
 }
+
+export async function updateDepartment(departmentBody: any){
+  console.log("inside update department dal", departmentBody)
+  await Departments.findOneAndUpdate(
+    {
+      name: departmentBody.name,
+      batches: { $elemMatch: { year: departmentBody.batches.year } }
+    },
+    { $set: { "batches.$" : departmentBody.batches } },
+    { upsert: true, new: true }
+ )
+}
