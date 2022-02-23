@@ -1,6 +1,7 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
+echo '\033[1mRUNNING PRE-COMMIT VALIDATIONS\033[0m';
 echo 'Styling, testing and building your project before comitting'
 
 # Formating all files
