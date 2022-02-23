@@ -1,9 +1,15 @@
 import App from './app';
 import DepartmentRoute from './components/departments/department.routes';
 import UserRoute from './components/users/user.routes';
+import StudentRoute from './components/students/student.routes';
+
+const app = new App([new DepartmentRoute(), new UserRoute(), new StudentRoute()]);
+
+app.listen();
+
+export default app;
 
 import { encap } from './services/helper';
-
 // (async function run () {
 //     const password1 = await encap.hash("123456")
 //     const password2 = await encap.hash("123456")
@@ -13,8 +19,3 @@ import { encap } from './services/helper';
 //     // password 1 & 2 both will be same as we're using same salt
 //     console.log("password1 == password2", password1 == password2, password1,password2);
 // })()
-const app = new App([new DepartmentRoute(), new UserRoute()]);
-
-app.listen();
-
-export default app;
