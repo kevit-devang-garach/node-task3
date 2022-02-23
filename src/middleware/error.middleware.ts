@@ -4,8 +4,8 @@ import { checkSchema, validationResult } from 'express-validator';
 import HttpException from '../utils/error.utils';
 
 export const errorMiddleware = (err: any, req: Request, res: Response, next: NextFunction) => {
-  console.log("req", Object.keys(req))
-  console.log(req.body)
+  console.log('req', Object.keys(req));
+  console.log(req.body);
   try {
     // set meta data
     let tranceMeta;
@@ -45,16 +45,16 @@ export const errorMiddleware = (err: any, req: Request, res: Response, next: Nex
 
 export function validateRequestMiddleware(schema: any) {
   return async (req: Request, res: Response, next: NextFunction) => {
-    console.log("req body validate request middleware", req.body)
-      await checkSchema(schema).run(req);
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-          next(
-              new HttpException(400, 'Middleware validation fail', 'MIDDLWARE_VALIDATION_ERROR', null, {
-                  ...errors,
-              }),
-          );
-      }
-      next();
+    console.log('req body validate request middleware', req.body);
+    await checkSchema(schema).run(req);
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      next(
+        new HttpException(400, 'Middleware validation fail', 'MIDDLWARE_VALIDATION_ERROR', null, {
+          ...errors,
+        })
+      );
+    }
+    next();
   };
 }

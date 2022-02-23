@@ -2,14 +2,15 @@ import App from './app';
 import DepartmentRoute from './components/departments/department.routes';
 import UserRoute from './components/users/user.routes';
 import StudentRoute from './components/students/student.routes';
+import AttendanceRoute from './components/attendance/attendance.routes';
 
-const app = new App([new DepartmentRoute(), new UserRoute(), new StudentRoute()]);
+const app = new App([new DepartmentRoute(), new UserRoute(), new StudentRoute(), new AttendanceRoute()]);
 
 app.listen();
 
 export default app;
 
-import { encap } from './services/helper';
+// import { encap } from './services/helper';
 // (async function run () {
 //     const password1 = await encap.hash("123456")
 //     const password2 = await encap.hash("123456")

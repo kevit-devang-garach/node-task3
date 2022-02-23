@@ -1,12 +1,10 @@
-import * as crypto from 'crypto';
+import crypto from 'crypto';
 export const encap = {
   salt: crypto.randomBytes(8).toString('hex'),
   hash: (password: string): Promise<string> => {
     return new Promise((resolve, reject) => {
       crypto.scrypt(password, encap.salt, 64, (err, derivedKey) => {
-        if (err) {
-          reject(err);
-        }
+        if (err) reject(err);
         resolve(`${encap.salt}:${derivedKey.toString('hex')}`);
       });
     });

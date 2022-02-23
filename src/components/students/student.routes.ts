@@ -17,7 +17,12 @@ class Student {
   }
 
   initializeRoutes() {
-    this.router.post(`${this.path}/add`, authenticateMiddleware.authorize, validateRequestMiddleware(addStudentSchema),this.studentController.add);
+    this.router.post(
+      `${this.path}/add`,
+      authenticateMiddleware.authorize,
+      validateRequestMiddleware(addStudentSchema),
+      this.studentController.add
+    );
   }
 }
 export default Student;

@@ -1,6 +1,4 @@
-import jwt from 'jsonwebtoken';
 import { Document, Model, model, ObjectId, Schema } from 'mongoose';
-
 import { encap } from '../../services/helper';
 
 // ===================================
@@ -14,46 +12,44 @@ export const addStudentSchema = {
     },
     errorMessage: 'First name is member name is required',
   },
-  // Getting error when is use isIn, even if field is present in postman with proper value 
+  // Getting error when is use isIn, even if field is present in postman with proper value
   department: {
     isString: true,
     errorMessage: 'student department id is required',
   },
   year: {
-    isLength: {min: 4, max: 4 },
+    isLength: { min: 4, max: 4 },
     errorMessage: 'batch year is required',
   },
   semester: {
-    isLength: {min: 1, max: 1 },
-      errorMessage: 'student semester is required',
+    isLength: { min: 1, max: 1 },
+    errorMessage: 'student semester is required',
   },
-  mobile:{
+  mobile: {
     isLength: {
       options: { min: 10, max: 10 },
     },
     errorMessage: 'Please enter valid mobile number',
   },
   address: {
-      isString: true,
-      isLength: {
-          options: {min: 3}
-      },
-      errorMessage: 'student address is required, with proper address',
+    isString: true,
+    isLength: {
+      options: { min: 3 },
+    },
+    errorMessage: 'student address is required, with proper address',
   },
   UIDAI: {
-      isLength: {
-        options: { min: 12, max: 12 },
-      },
-      errorMessage: 'Please enter valid aadhar card number',
-  }
+    isLength: {
+      options: { min: 12, max: 12 },
+    },
+    errorMessage: 'Please enter valid aadhar card number',
+  },
 };
-
-
 
 // ===================================
 // Students schema to store in databreturn this.findOne({
 // ===================================
-export interface StudentDocument extends Document{
+export interface StudentDocument extends Document {
   name: string;
   department: ObjectId;
   year: number;
@@ -64,9 +60,9 @@ export interface StudentDocument extends Document{
   UIDAI: number;
   isActive: boolean;
 }
-export interface StudentModel extends Model<StudentDocument>{
+export interface StudentModel extends Model<StudentDocument> {
   findByCredentials(email: string): any;
-  findByToken(token:string): any;
+  findByToken(token: string): any;
   toJSON(): any;
 }
 
@@ -78,37 +74,37 @@ const studentSchema: Schema = new Schema(
     },
     department: {
       type: Schema.Types.ObjectId,
-      ref: 'deparments',
+      ref: 'departments',
     },
-    year:{
-        type: Schema.Types.Number,
-        required: true
+    year: {
+      type: Schema.Types.Number,
+      required: true,
     },
     semester: {
-        type: Schema.Types.Number,
-        required: true
+      type: Schema.Types.Number,
+      required: true,
     },
     admisssionDate: {
       type: Schema.Types.Date,
       default: Date.now(),
     },
-    mobile:{
-        type: Schema.Types.Number,
-        required: true
+    mobile: {
+      type: Schema.Types.Number,
+      required: true,
     },
-    address:{
-        type: Schema.Types.String,
-        required: true
+    address: {
+      type: Schema.Types.String,
+      required: true,
     },
     UIDAI: {
-        type: Schema.Types.String,
-        unique: true,
-        required: true
+      type: Schema.Types.String,
+      unique: true,
+      required: true,
     },
     isActive: {
       type: Schema.Types.Boolean,
       default: true,
-    }
+    },
   },
   { versionKey: false, timestamps: true }
 );
@@ -128,7 +124,7 @@ studentSchema.pre('save', async function (next) {
   next();
 });
 
-studentSchema.methods.toJSON = function(){
+studentSchema.methods.toJSON = function () {
   const student = this;
   // console.log("student u",student);
   const studentObject = student.toObject();
@@ -137,7 +133,7 @@ studentSchema.methods.toJSON = function(){
   delete studentObject.avatar;
   // console.log("after update",studentObject)
   return studentObject;
-}
+};
 
-const Student:StudentModel = model<StudentDocument, StudentModel>('students', studentSchema);
+const Student: StudentModel = model<StudentDocument, StudentModel>('students', studentSchema);
 export default Student;

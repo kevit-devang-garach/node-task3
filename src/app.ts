@@ -2,7 +2,6 @@ import express from 'express';
 // import path from 'path';
 import mongoose from 'mongoose';
 import helmet from 'helmet';
-import bodyparser from 'body-parser';
 import hpp from 'hpp';
 import { customLogger, pinoFormatConfig } from './services/logger';
 import Config from './environments/index';
@@ -18,18 +17,19 @@ import { errorMiddleware } from './middleware/error.middleware';
 //     "contact":1
 // } as const
 
-declare global{
+declare global {
   namespace Express {
     export interface Request {
-        user: any;
-        token: any;
+      user: any;
+      token: any;
     }
     export interface Response {
-        user: any;
-        token: any;
+      user: any;
+      token: any;
     }
   }
 }
+
 class App {
   public app: express.Application;
 
@@ -80,7 +80,6 @@ class App {
   }
 
   private initializeMiddlewares() {
-    // this.app.use(bodyparser());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.json());
     this.app.use(helmet());

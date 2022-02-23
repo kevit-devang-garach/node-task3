@@ -17,7 +17,7 @@ export const signUpUserSchema = {
     },
     errorMessage: 'First name is member name is required',
   },
-  // Getting error when is use isIn, even if field is present in postman with proper value 
+  // Getting error when is use isIn, even if field is present in postman with proper value
   department: {
     isString: true,
     // isIn : ['staff','admin','MCA'],
@@ -35,7 +35,7 @@ export const signUpUserSchema = {
       },
     },
     errorMessage: 'Please enter strong passord',
-  }
+  },
 };
 
 export const signInUserSchema = {
@@ -52,7 +52,7 @@ export const signInUserSchema = {
 // ===================================
 // Staff schema to store in databreturn this.findOne({
 // ===================================
-export interface UserDocument extends Document{
+export interface UserDocument extends Document {
   name: string;
   department: string;
   email: string;
@@ -60,11 +60,10 @@ export interface UserDocument extends Document{
   joinDate: Date | number;
   isAdmin: boolean;
   isActive: boolean;
-  
 }
-export interface UserModel extends Model<UserDocument>{
+export interface UserModel extends Model<UserDocument> {
   findByCredentials(email: string, password: string): any;
-  findByToken(token:string): any;
+  findByToken(token: string): any;
   toJSON(): any;
 }
 
@@ -80,14 +79,15 @@ const userSchema: Schema = new Schema(
       required: true,
     },
     department: {
-      enum : ['CE','admin','MCA'],
+      enum: ['CE', 'admin', 'MCA'],
       type: Schema.Types.String,
-      // ref: 'deparments',
-      default: 'MCA'
+      // ref: 'departments',
+      default: 'MCA',
+      
     },
     isAdmin: {
       type: Schema.Types.Boolean,
-      default:false
+      default: false,
     },
     password: {
       type: Schema.Types.String,
@@ -109,12 +109,12 @@ const userSchema: Schema = new Schema(
 // General auth token method
 // ===================================
 userSchema.methods.getAuthToken = async function () {
-  const  user = this;
+  const user = this;
   console.log('user auth', user);
   console.log('user id Hex String', user._id.toHexString());
   console.log('user id String', user._id.toString());
   const token = jwt.sign({ _id: user._id.toHexString() }, Config.JWT_AUTH, {
-    expiresIn: '3d'
+    expiresIn: '3d',
   });
   console.log('token', token, typeof token);
   user.accessToken = token;
@@ -128,40 +128,40 @@ userSchema.methods.getAuthToken = async function () {
 userSchema.statics.findByToken = async function (token) {
   let decoded: any;
   try {
-      decoded = jwt.verify(token, Config.JWT_AUTH);
+    decoded = jwt.verify(token, Config.JWT_AUTH);
   } catch (err: any) {
-      let hasSessionExpired = false;
-      if (err && err.message && err.message.includes('jwt expired')) {
-          hasSessionExpired = true;
-      }
-      if (hasSessionExpired) {
-          throw new HttpException(404, USER_ERROR_CODES.USER_SESSION_EXPIRED, 'USER_SESSION_EXPIRED', null,'');
-      } else {
-          throw new HttpException(404, USER_ERROR_CODES.AUTH_FAILED, 'AUTH_FAILED', null,'');
-      }
+    let hasSessionExpired = false;
+    if (err && err.message && err.message.includes('jwt expired')) {
+      hasSessionExpired = true;
+    }
+    if (hasSessionExpired) {
+      throw new HttpException(404, USER_ERROR_CODES.USER_SESSION_EXPIRED, 'USER_SESSION_EXPIRED', null, '');
+    } else {
+      throw new HttpException(404, USER_ERROR_CODES.AUTH_FAILED, 'AUTH_FAILED', null, '');
+    }
   }
   return this.findOne({
-      _id: decoded._id
+    _id: decoded._id,
   });
 };
 
 userSchema.statics.findByCredentials = async function (email, password) {
-  console.log("inside find by credentials, email , password", email, password)
-  const user = await this.findOne({ email: email });
-  console.log("valid user",user)
+  console.log('inside find by credentials, email , password', email, password);
+  const user = await User.findOne({ email: email });
+  console.log('valid user', user);
   if (!user) {
-      throw new HttpException(404, USER_ERROR_CODES.USER_NOT_FOUND, 'USER_NOT_FOUND', null, {
-          email: email,
-      });
+    throw new HttpException(404, USER_ERROR_CODES.USER_NOT_FOUND, 'USER_NOT_FOUND', null, {
+      email: email,
+    });
   }
-  if(user && !user.isActive){
-    console.log("inside if")
+  if (user && !user.isActive) {
+    console.log('inside if');
     throw new HttpException(404, USER_ERROR_CODES.USER_NOT_AUTHROIZED, 'USER_NOT_AUTHROIZED', null, null);
   }
   const res = await encap.verify(password, user.password);
-  console.log("verify result", res)
+  console.log('verify result', res);
   if (res === true) {
-      return user;
+    return user;
   }
   throw new HttpException(404, USER_ERROR_CODES.INCORRECT_PASSWORD, 'INCORRECT_PASSWORD', null, null);
 };
@@ -201,7 +201,7 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-userSchema.methods.toJSON = function(){
+userSchema.methods.toJSON = function () {
   const user = this;
   // console.log("user u",user);
   const userObject = user.toObject();
@@ -210,7 +210,7 @@ userSchema.methods.toJSON = function(){
   delete userObject.avatar;
   // console.log("after update",userObject)
   return userObject;
-}
+};
 
-const User:UserModel = model<UserDocument, UserModel>('users', userSchema);
+const User: UserModel = model<UserDocument, UserModel>('users', userSchema);
 export default User;

@@ -17,7 +17,12 @@ class DepartmentRoute {
   }
 
   initializeRoutes() {
-    this.router.post(`${this.path}/create`, authenticateMiddleware.authorize, validateRequestMiddleware(addDepartmentSchema), this.departmentController.create);
+    this.router.post(
+      `${this.path}/create`,
+      authenticateMiddleware.authorize,
+      validateRequestMiddleware(addDepartmentSchema),
+      this.departmentController.create
+    );
     this.router.post(`${this.path}/update`, authenticateMiddleware.authorize, this.departmentController.update);
   }
 }

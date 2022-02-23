@@ -17,8 +17,17 @@ class User {
   }
 
   initializeRoutes() {
-    this.router.post(`${this.path}/create`, authenticateMiddleware.authorize, validateRequestMiddleware(signUpUserSchema),this.userController.signUpUser);
-    this.router.post(`${this.path}/signIn`, validateRequestMiddleware(signInUserSchema),this.userController.signInUser);
+    this.router.post(
+      `${this.path}/create`,
+      authenticateMiddleware.authorize,
+      validateRequestMiddleware(signUpUserSchema),
+      this.userController.signUpUser
+    );
+    this.router.post(
+      `${this.path}/signIn`,
+      validateRequestMiddleware(signInUserSchema),
+      this.userController.signInUser
+    );
   }
 }
 export default User;
