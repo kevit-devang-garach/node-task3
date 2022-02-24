@@ -4,8 +4,8 @@ import { authenticateMiddleware } from '../../middleware/auth.middleware';
 import { validateRequestMiddleware } from '../../middleware/error.middleware';
 
 
-class Analytics {
-  path = '/user';
+class AnalyticsRoute {
+  path = '/analytics';
 
   router = Router();
 
@@ -25,4 +25,4 @@ class Analytics {
     );
   }
 }
-export default Analytics;
+export default AnalyticsRoute;

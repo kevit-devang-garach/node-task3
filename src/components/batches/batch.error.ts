@@ -11,7 +11,7 @@ export const BATCHES_ERROR_CODES = {
     UPLOAD_PROFILE_IMAGE_FAILED: 'Something went wrong while update profile picture',
   
     // User DAL error codes
-    CREATE_DEPT_UNHANDLED_IN_DB: 'Something went wrong while creating new department',
+    CREATE_BATCH_UNHANDLED_IN_DB: 'Something went wrong while creating new batch branch',
   };
   export default {
     BATCHES_ERROR_CODES,

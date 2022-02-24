@@ -4,8 +4,16 @@ import UserRoute from './components/users/user.routes';
 import StudentRoute from './components/students/student.routes';
 import AttendanceRoute from './components/attendance/attendance.routes';
 import AnalyticsRoute from './components/analytics/analytics.routes';
+import BatchRoute from './components/batches/batch.routes';
 
-const app = new App([new DepartmentRoute(), new UserRoute(), new StudentRoute(), new AttendanceRoute(), new AnalyticsRoute()]);
+const app = new App([
+    new DepartmentRoute(), 
+    new UserRoute(), 
+    new StudentRoute(), 
+    new AttendanceRoute(), 
+    new AnalyticsRoute(),
+    new BatchRoute(),
+]);
 
 app.listen();
 

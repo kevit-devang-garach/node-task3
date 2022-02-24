@@ -8,11 +8,14 @@ export const addBatchSchema = {
     isLength: {
       options: { min: 4, max: 4 },
     },
+    errorMessage: "batch year is required"
   },
-  totalStudents: {
-    isNumber: true,
-    errorMessage: 'Batch total Students is required in number',
-  },
+  department: {
+    isLength: {
+      options: {min:2}
+    },
+    errorMessage: "department is required"
+  }
 };
 
 export interface BatchDocument extends Document {
@@ -20,7 +23,7 @@ export interface BatchDocument extends Document {
   totalStudents: number;
   branches: [
     {
-      branch: string;
+      name: string;
       totalStudentsIntake: number;
     }
   ];
@@ -31,59 +34,61 @@ export interface BatchDocument extends Document {
 // ===================================
 
 export interface BatchDocument extends Document {
-  name: string;
+  year: number;
 }
 
 interface BatchModel extends Model<BatchDocument> {
-  findByDepartment(name: string): any;
+  findByYear(year: number): any;
+  findByFields(year: number, branch: string): any;
 }
 
 // ===================================
 // Batches schema to store in database
 // ===================================
-
-const batchesSchema = new Schema(
+const branchArr = new Schema(
   {
     name: {
       type: Schema.Types.String,
       unique: true,
-      required: true,
+      required:true
     },
+    totalStudentsIntake: {
+      type: Schema.Types.Number,
+      default: 0,
+    },  
     startDate: {
       type: Schema.Types.Date,
-      default: Date.now(),
+      default: Date.now()
     },
-    batches: [
-      {
-        year: {
-          type: Schema.Types.Number,
-          required: true,
-          unique: true,
-        },
-        totalIntake: {
-          type: Schema.Types.Number,
-          default: 0,
-        },
-      },
-    ],
     isActive: {
       type: Schema.Types.Boolean,
       default: true,
     },
+  }, {versionKey: false, timestamps: true}
+)
+const batchesSchema = new Schema(
+  {
+    year: {
+      type: Schema.Types.Number,
+      unique: true,
+      required: true,
+    },
+    branches: [branchArr],
   },
-  { versionKey: false, timestamps: true }
+  { versionKey: false }
 );
 
-batchesSchema.statics.findByDepartment = async function (name) {
-  console.log('inside find by batch, name', name);
-  const batch = await Batches.findOne({ name: name });
+batchesSchema.statics.findByYear = async function (year) {
+  console.log('inside find by batch, year', year);
+  const batch = await Batches.findOne({ year: year });
   console.log('valid batch', batch);
-  if (!batch) {
-    throw new HttpException(404, BATCHES_ERROR_CODES.BATCHES_NOT_FOUND, 'BATCHES_NOT_FOUND', null, {
-      batch: name,
-    });
-  }
+  return batch;
+};
 
+batchesSchema.statics.findByFields = async function (year) {
+  console.log('inside find by batch, year', year);
+  const batch = await Batches.findOne({ year: year });
+  console.log('valid batch', batch);
   return batch;
 };
 
