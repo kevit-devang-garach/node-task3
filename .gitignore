@@ -1,5 +1,6 @@
 build
 node_modules
-src/keys
+src/keys/jwtPrivate.key
+src/keys/jwtPublic.key
 .env
 coverage

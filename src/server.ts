@@ -3,8 +3,9 @@ import DepartmentRoute from './components/departments/department.routes';
 import UserRoute from './components/users/user.routes';
 import StudentRoute from './components/students/student.routes';
 import AttendanceRoute from './components/attendance/attendance.routes';
+import AnalyticsRoute from './components/analytics/analytics.routes';
 
-const app = new App([new DepartmentRoute(), new UserRoute(), new StudentRoute(), new AttendanceRoute()]);
+const app = new App([new DepartmentRoute(), new UserRoute(), new StudentRoute(), new AttendanceRoute(), new AnalyticsRoute()]);
 
 app.listen();
 
