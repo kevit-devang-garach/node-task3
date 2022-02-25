@@ -1,0 +1,31 @@
+db.attendances.aggregate([
+    {
+        $match: {
+            absentDate: ISODate("2022-01-09")
+        }
+    },
+    {
+        $lookup: {
+            from: 'students',
+            localField: 'userId',
+            foreignField: '_id',
+            as:'studentDetails'
+        }
+    },
+    {
+        $unwind: "$studentDetails"
+    },
+    {
+        $match:{
+            "studentDetails.year":2020,
+            "studentDetails.semester": 1,
+            "studentDetails.department":ObjectId("6214e7034d2875028d282b43")
+            }
+        },
+    {
+        $project: { 
+            name: "$studentDetails.name", 
+            _id: 0
+        }
+    }
+])
