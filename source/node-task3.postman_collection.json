@@ -82,7 +82,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n     \"name\": \"CE\",\n     \"batches\": {\n         \"year\": 2022,\n         \"totalIntake\": 5\n     }\n\n}",
+					"raw": "{\n     \"name\": \"ME\",\n     \"batches\": {\n         \"year\": 2022,\n         \"totalIntake\": 5\n     }\n\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -136,7 +136,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"Devang\",\n    \"department\": \"6214b668c16c8851c02e006a\",\n    \"year\": 2022,\n    \"semester\": 1,\n    \"mobile\": 4611035225,\n    \"address\": \"Rajkot\",\n    \"UIDAI\": 223766789120\n}",
+					"raw": "{\n    \"name\": \"Faltu\",\n    \"department\": \"6214e7034d2875028d282b43\",\n    \"year\": 2020,\n    \"semester\": 1,\n    \"mobile\": 4611035228,\n    \"address\": \"Rajkot\",\n    \"UIDAI\": 214560689111\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -190,7 +190,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"year\": \"2025\",\n    \"department\": \"MBA\",\n    \"totalStudentsIntake\": 8\n}",
+					"raw": "{\n    \"year\": \"2022\",\n    \"branch\": \"ME\",\n    \"department\": \"62187274532f115c1df75b2e\",\n    \"totalStudentsIntake\": 15\n}",
 					"options": {
 						"raw": {
 							"language": "json"

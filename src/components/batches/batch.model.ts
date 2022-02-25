@@ -10,7 +10,7 @@ export const addBatchSchema = {
     },
     errorMessage: "batch year is required"
   },
-  department: {
+  branch: {
     isLength: {
       options: {min:2}
     },
@@ -51,6 +51,12 @@ const branchArr = new Schema(
       type: Schema.Types.String,
       unique: true,
       required:true
+    },
+    department: {
+      type: Schema.Types.ObjectId,
+      ref: 'departments',
+      required: true,
+      unique: true
     },
     totalStudentsIntake: {
       type: Schema.Types.Number,

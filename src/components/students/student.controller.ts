@@ -11,10 +11,12 @@ class StudentController {
         console.log('inside if');
         throw Error('USER IS NOT AUTHORIZED');
       }
-
       const studentObject: any = { name, department, year, semester, admissionDate, mobile, address, UIDAI, isActive };
-      // console.log("check vacntseats console",(await checkVacantSeats(studentObject.department, studentObject.year)));
-
+      console.log("studentObject",studentObject)
+      console.log("stude obja",studentObject.department, studentObject.year)
+      console.log("check vacntseats console",(await checkVacantSeats(studentObject.department, studentObject.year)));
+      
+      console.log("stud obje", studentObject.department, studentObject.year)
       if (!(await checkVacantSeats(studentObject.department, studentObject.year))) {
         console.log('checkVacantSeat');
         return next('Housefull');

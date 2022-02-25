@@ -28,7 +28,7 @@ export async function findBatchById(batchId: any) {
 
   export async function updateBranches(batchBody: any) {
     console.log('inside update department dal', batchBody);
-    const found = await Batches.find({year: batchBody.year, branches: { $elemMatch: { name: batchBody.branches.name } }})
+    const found = await Batches.find({year: batchBody.year, branches: { $elemMatch: { department: batchBody.branches.department } }}).lean()
     console.log("found",found, found.length)
     if(!found.length){
         console.log("if")
@@ -47,7 +47,7 @@ export async function findBatchById(batchId: any) {
         return await Batches.updateOne(
             {
                 year: batchBody.year,
-                branches: { $elemMatch: { name: batchBody.branches.name } },
+                branches: { $elemMatch: { department: batchBody.branches.department } },
               },
               { $set: { 'branches.$.totalStudentsIntake': batchBody.branches.totalStudentsIntake } },
               { upsert: true, new: true }

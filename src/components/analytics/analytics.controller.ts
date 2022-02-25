@@ -1,6 +1,6 @@
 import { Response, Request, NextFunction} from 'express'
 import HttpException from '../../utils/error.utils'
-import { findBranchesOrdByTotalStudents } from './analytics.DAL';
+import { findBranchesOrdByTotalStudents, listVacantSeats } from './analytics.DAL';
 import { ANALYTICS_ERROR_CODES } from './analytics.error'
 
 class AnalyticsController {
@@ -19,7 +19,21 @@ class AnalyticsController {
             console.log("error:",err);
             return next(err);
         }
-    } 
+    }
+    async vacantSeats(req: Request, res: Response, next: NextFunction){
+        try{
+            if (req && req.user && (!req.user.isActive || !req.user.isAdmin)) {
+                console.log('inside if');
+                throw Error('USER IS NOT AUTHORIZED');
+            }
+            const result = await listVacantSeats();
+            return res.status(200).send(result);
+        }
+        catch(err) {
+            console.log("error:",err);
+            return next(err);
+        }
+    }
 }
 
 export default AnalyticsController;

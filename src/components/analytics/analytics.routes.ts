@@ -23,6 +23,12 @@ class AnalyticsRoute {
     //   validateRequestMiddleware(signUpUserSchema),
       this.analyticsController.listOfBatches
     );
+    this.router.post(
+      `${this.path}/vacant-seats`,
+      authenticateMiddleware.authorize,
+    //   validateRequestMiddleware(signUpUserSchema),
+      this.analyticsController.vacantSeats
+    );
   }
 }
 export default AnalyticsRoute;

@@ -7,12 +7,12 @@ class BatchController {
         console.log("batch req ", req.body)
         try{
             console.log("try");
-            const { year, department, totalStudentsIntake, startDate, isActive } = req.body;
+            const { year, branch, department, totalStudentsIntake, startDate, isActive } = req.body;
         if (req && req.user && (!req.user.isActive || !req.user.isAdmin)) {
             console.log('inside if');
             throw Error('USER IS NOT AUTHORIZED');
         }
-        const branches = {name: department, totalStudentsIntake, startDate, isActive}
+        const branches = {name: branch, department, totalStudentsIntake, startDate, isActive}
         const batchObject = { year, branches };
         console.log("batch obj:",batchObject)
         const batch = await createNewBatch(batchObject);
