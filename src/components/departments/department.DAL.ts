@@ -1,13 +1,11 @@
 import HttpException from '../../utils/error.utils';
 import { DEPARTMENT_ERROR_CODES } from './department.error';
-import Departments from './department.model';
+import Departments, { DepartmentDocument } from './department.model';
 
-export async function createNewDepartment(departmentBody: any) {
+export async function createNewDepartment(departmentBody: Pick<DepartmentDocument, "name" | "startDate" | "batches" | "isActive">) {
   try {
-    console.log('createNewDepartment');
     return await Departments.create(departmentBody);
   } catch (err) {
-    console.log('error in catch new create dept');
     throw new HttpException(
       500,
       DEPARTMENT_ERROR_CODES.CREATE_DEPT_UNHANDLED_IN_DB,
@@ -17,7 +15,7 @@ export async function createNewDepartment(departmentBody: any) {
     );
   }
 }
-export async function findDepartmentById(departmentId: any) {
+export async function findDepartmentById(departmentId: DepartmentDocument) {
   try {
     return await Departments.findById(departmentId).lean();
   } catch (err) {
@@ -26,7 +24,6 @@ export async function findDepartmentById(departmentId: any) {
 }
 
 export async function updateDepartment(departmentBody: any) {
-  console.log('inside update department dal', departmentBody);
   await Departments.findOneAndUpdate(
     {
       name: departmentBody.name,
@@ -34,5 +31,5 @@ export async function updateDepartment(departmentBody: any) {
     },
     { $set: { 'batches.$': departmentBody.batches } },
     { upsert: true, new: true }
-  );
+  ).lean();
 }

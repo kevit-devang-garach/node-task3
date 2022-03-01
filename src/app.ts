@@ -72,9 +72,7 @@ class App {
   }
 
   private initializeRoutes(routes: object[]) {
-    // console.log(demo.name, typeof(demo.name) ,typeof(demo))
     routes.forEach((route: any) => {
-      // console.log(typeof route, route)
       this.app.use('/', route.router);
     });
   }

@@ -1,1 +1,15 @@
-{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"key":{"UIDAI":{"$numberInt":"1"}},"name":"UIDAI_1","background":true,"unique":true}],"uuid":"1feebdbdc26b4efcaf29b426c5f19b88","collectionName":"students","type":"collection"}
+{
+  "indexes": [
+    { "v": { "$numberInt": "2" }, "key": { "_id": { "$numberInt": "1" } }, "name": "_id_" },
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "UIDAI": { "$numberInt": "1" } },
+      "name": "UIDAI_1",
+      "background": true,
+      "unique": true
+    }
+  ],
+  "uuid": "1feebdbdc26b4efcaf29b426c5f19b88",
+  "collectionName": "students",
+  "type": "collection"
+}

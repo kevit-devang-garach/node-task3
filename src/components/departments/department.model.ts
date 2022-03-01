@@ -18,10 +18,13 @@ export const addDepartmentSchema = {
 
 export interface DepartmentDocument extends Document {
   name: string;
+  startDate: Date;
+  isActive: boolean;
+  batches: [ {year: number, totalIntake: number}];
 }
 
 interface DepartmentModel extends Model<DepartmentDocument> {
-  findByDepartment(name: string): any;
+  findByDepartment(name: string) : Promise<DepartmentDocument>;
 }
 
 // ===================================
@@ -61,9 +64,7 @@ const departmentSchema = new Schema(
 );
 
 departmentSchema.statics.findByDepartment = async function (name) {
-  console.log('inside find by department, name', name);
   const department = await Departments.findOne({ name: name });
-  console.log('valid department', department);
   if (!department) {
     throw new HttpException(404, DEPARTMENT_ERROR_CODES.DEPARTMENT_NOT_FOUND, 'DEPARTMENT_NOT_FOUND', null, {
       department: name,

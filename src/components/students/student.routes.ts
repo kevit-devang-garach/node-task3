@@ -12,7 +12,6 @@ class Student {
   studentController = new StudentController();
 
   constructor() {
-    console.log('Student Route Contructor');
     this.initializeRoutes();
   }
 

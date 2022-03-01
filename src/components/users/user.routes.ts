@@ -12,7 +12,6 @@ class User {
   userController = new UserController();
 
   constructor() {
-    console.log('User Route Contructor');
     this.initializeRoutes();
   }
 

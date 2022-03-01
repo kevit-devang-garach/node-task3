@@ -1,7 +1,7 @@
 // import jwt from 'jsonwebtoken';
-import { Document, Model, model, Schema } from 'mongoose';
-import HttpException from '../../utils/error.utils';
-import { BATCHES_ERROR_CODES } from './batch.error';
+import { Document, Model, model, ObjectId, Schema } from 'mongoose';
+// import HttpException from '../../utils/error.utils';
+// import { BATCHES_ERROR_CODES } from './batch.error';
 
 export const addBatchSchema = {
   year: {
@@ -35,11 +35,12 @@ export interface BatchDocument extends Document {
 
 export interface BatchDocument extends Document {
   year: number;
+  _id: ObjectId;
 }
 
 interface BatchModel extends Model<BatchDocument> {
-  findByYear(year: number): any;
-  findByFields(year: number, branch: string): any;
+  findByYear(year: number): Promise<BatchDocument>;
+  findByFields(year: number, branch: string): Promise<BatchDocument>;
 }
 
 // ===================================
@@ -85,16 +86,12 @@ const batchesSchema = new Schema(
 );
 
 batchesSchema.statics.findByYear = async function (year) {
-  console.log('inside find by batch, year', year);
   const batch = await Batches.findOne({ year: year });
-  console.log('valid batch', batch);
   return batch;
 };
 
 batchesSchema.statics.findByFields = async function (year) {
-  console.log('inside find by batch, year', year);
   const batch = await Batches.findOne({ year: year });
-  console.log('valid batch', batch);
   return batch;
 };
 

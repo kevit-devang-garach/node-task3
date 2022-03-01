@@ -1,5 +1,5 @@
-import jwt from 'jsonwebtoken';
-import { Document, Model, model, Schema } from 'mongoose';
+import jwt, { JwtPayload } from 'jsonwebtoken';
+import { Document, Model, model, ObjectId, Schema } from 'mongoose';
 
 import { encap } from '../../services/helper';
 import Config from '../../environments/index';
@@ -17,10 +17,8 @@ export const signUpUserSchema = {
     },
     errorMessage: 'First name is member name is required',
   },
-  // Getting error when is use isIn, even if field is present in postman with proper value
   department: {
     isString: true,
-    // isIn : ['staff','admin','MCA'],
     errorMessage: 'Department short name is required',
   },
   email: {
@@ -53,17 +51,19 @@ export const signInUserSchema = {
 // Staff schema to store in databreturn this.findOne({
 // ===================================
 export interface UserDocument extends Document {
+  _id: ObjectId;
   name: string;
-  department: string;
   email: string;
+  department: string | ObjectId;
   password: string;
   joinDate: Date | number;
   isAdmin: boolean;
   isActive: boolean;
+  getAuthToken(): string;
 }
 export interface UserModel extends Model<UserDocument> {
-  findByCredentials(email: string, password: string): any;
-  findByToken(token: string): any;
+  findByCredentials(email: string, password: string): Promise<UserDocument>;
+  findByToken(token: string): Promise<UserDocument>;
   toJSON(): any;
 }
 
@@ -109,16 +109,9 @@ const userSchema: Schema = new Schema(
 // General auth token method
 // ===================================
 userSchema.methods.getAuthToken = async function () {
-  const user = this;
-  console.log('user auth', user);
-  console.log('user id Hex String', user._id.toHexString());
-  console.log('user id String', user._id.toString());
-  const token = jwt.sign({ _id: user._id.toHexString() }, Config.JWT_AUTH, {
-    expiresIn: '3d',
-  });
-  console.log('token', token, typeof token);
+    const user = this;
+  const token = jwt.sign({ _id: user._id.toHexString() }, Config.JWT_AUTH, { expiresIn: '3d' });
   user.accessToken = token;
-  // await user.save();
   return token;
 };
 
@@ -126,7 +119,7 @@ userSchema.methods.getAuthToken = async function () {
 // find User member by token
 // ===================================
 userSchema.statics.findByToken = async function (token) {
-  let decoded: any;
+  let decoded: JwtPayload | string;
   try {
     decoded = jwt.verify(token, Config.JWT_AUTH);
   } catch (err: any) {
@@ -135,80 +128,49 @@ userSchema.statics.findByToken = async function (token) {
       hasSessionExpired = true;
     }
     if (hasSessionExpired) {
-      throw new HttpException(404, USER_ERROR_CODES.USER_SESSION_EXPIRED, 'USER_SESSION_EXPIRED', null, '');
+      throw new HttpException(404, USER_ERROR_CODES.USER_SESSION_EXPIRED, 'USER_SESSION_EXPIRED', null, null);
     } else {
-      throw new HttpException(404, USER_ERROR_CODES.AUTH_FAILED, 'AUTH_FAILED', null, '');
+      throw new HttpException(404, USER_ERROR_CODES.AUTH_FAILED, 'AUTH_FAILED', null, null);
     }
   }
-  return this.findOne({
-    _id: decoded._id,
+  return User.findOne({
+    _id: Object.values(decoded)[0],
   });
 };
 
 userSchema.statics.findByCredentials = async function (email, password) {
-  console.log('inside find by credentials, email , password', email, password);
   const user = await User.findOne({ email: email });
-  console.log('valid user', user);
   if (!user) {
     throw new HttpException(404, USER_ERROR_CODES.USER_NOT_FOUND, 'USER_NOT_FOUND', null, {
       email: email,
     });
   }
   if (user && !user.isActive) {
-    console.log('inside if');
     throw new HttpException(404, USER_ERROR_CODES.USER_NOT_AUTHROIZED, 'USER_NOT_AUTHROIZED', null, null);
   }
   const res = await encap.verify(password, user.password);
-  console.log('verify result', res);
   if (res === true) {
     return user;
   }
   throw new HttpException(404, USER_ERROR_CODES.INCORRECT_PASSWORD, 'INCORRECT_PASSWORD', null, null);
 };
-// userSchema.static('findByToken', function(token: string): any {
-//   let decoded;
-//   try {
-//     decoded = jwt.verify(token, Config.JWT_PUBLIC_KEY);
-//     console.log('decoded after jwt verify', decoded);
-//   } catch (err: any) {
-//     console.log('err type', typeof err);
-//     let hasSessionExpired = false;
-//     if (err && err.message && err.message.includes('JWT Expired')) {
-//       hasSessionExpired = true;
-//     }
-//     if (hasSessionExpired)
-//       throw new HttpException(404, USER_ERROR_CODES.USER_SESSION_EXPIRED, 'USER_SESSION_EXPIRED', null, '');
-//     else throw new HttpException(404, USER_ERROR_CODES.AUTH_FAILED, 'AUTH_FAILED', null, '');
-//   }
-//   return this.findOne({
-//     _id: decoded,
-//     accessToken: token,
-//   });
-// });
 
 // ===================================
 // Pre hook before saving it execute
 // ===================================
 userSchema.pre('save', async function (next) {
-  const user: any = this;
-  console.log('user inside pre', user);
-  // console.log('user inside pre save', user);
+  const user: UserDocument = this;
   if (user.isModified('password')) {
-    console.log('user.password before hash', user.password);
     user.password = await encap.hash(user.password);
-    console.log('after hash user.password', user.password);
   }
   next();
 });
 
 userSchema.methods.toJSON = function () {
   const user = this;
-  // console.log("user u",user);
   const userObject = user.toObject();
-  // console.log("userObject",userObject)
   delete userObject.password;
   delete userObject.avatar;
-  // console.log("after update",userObject)
   return userObject;
 };
 

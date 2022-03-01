@@ -9,9 +9,7 @@ class BatchRoute{
     router = Router();
     batchController = new BatchController();
     constructor(){
-        console.log("Batch Route Constructor");
         this.initializeRoutes();
-        
     }
     initializeRoutes() {
         this.router.post(`${this.path}/create`, authenticateMiddleware.authorize, validateRequestMiddleware(addBatchSchema), this.batchController.create)

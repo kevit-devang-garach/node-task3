@@ -1,8 +1,8 @@
 import HttpException from "../../utils/error.utils";
 import { ATTENDANCE_ERROR_CODES } from "./attendance.error";
-import Attendance from "./attendance.model";
+import Attendance, { AttendanceDocument } from "./attendance.model";
 
-export async function createAttendanceRecord(attendaceObject: any){
+export async function createAttendanceRecord(attendaceObject: Pick<AttendanceDocument, "department" | "userId" | "year" | "semester" | "absentDate" | "reason">){
     try{
         return await Attendance.create(attendaceObject);
     } catch(err){

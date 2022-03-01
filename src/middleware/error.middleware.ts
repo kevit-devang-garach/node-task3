@@ -4,13 +4,10 @@ import { checkSchema, validationResult } from 'express-validator';
 import HttpException from '../utils/error.utils';
 
 export const errorMiddleware = (err: any, req: Request, res: Response, next: NextFunction) => {
-  console.log('req', Object.keys(req));
-  console.log(req.body);
   try {
     // set meta data
     let tranceMeta;
     if (err.meta) {
-      console.log('error meta under if condition');
       tranceMeta = { ...err.meta, ...{ traceId: req.id } };
     } else {
       tranceMeta = { traceId: req.id };
@@ -45,7 +42,6 @@ export const errorMiddleware = (err: any, req: Request, res: Response, next: Nex
 
 export function validateRequestMiddleware(schema: any) {
   return async (req: Request, res: Response, next: NextFunction) => {
-    console.log('req body validate request middleware', req.body);
     await checkSchema(schema).run(req);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

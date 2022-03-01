@@ -1,235 +1,16 @@
 {
 	"info": {
-		"_postman_id": "951b3d50-42f6-48fe-bc64-caf8fb902e0d",
+		"_postman_id": "13fd7568-bc60-44ed-9ad6-da1b27539dc9",
 		"name": "node-task3",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Create staff user",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"name\": \"vasav\",\n    \"department\": \"CE\",\n    \"email\": \"vasav@gmail.com\",\n    \"isActive\": false,\n    \"isAdmin\": false,\n    \"password\": \"Kevit@Rajkot2022\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{url}}/user/create",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"user",
-						"create"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Signin staff user",
-			"event": [
+			"name": "Analytics",
+			"item": [
 				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"if(pm.response.code === 200){",
-							"    pm.environment.set('authToken',pm.response.json().accessToken)",
-							"}"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"email\": \"devang.garach@kevit.io\",\n    \"password\": \"Kevit@Rajkot2022\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{url}}/user/signIn",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"user",
-						"signIn"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Create department",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n     \"name\": \"ME\",\n     \"batches\": {\n         \"year\": 2022,\n         \"totalIntake\": 5\n     }\n\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{url}}/department/create",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"department",
-						"create"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Update department",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n     \"name\": \"CE\",\n     \"batches\": {\n         \"year\": 2022,\n         \"totalIntake\": 2\n     }\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{url}}/department/update",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"department",
-						"update"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Add student",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"name\": \"Faltu\",\n    \"department\": \"6214e7034d2875028d282b43\",\n    \"year\": 2020,\n    \"semester\": 1,\n    \"mobile\": 4611035228,\n    \"address\": \"Rajkot\",\n    \"UIDAI\": 214560689111\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{url}}/student/add",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"student",
-						"add"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Add attendance absent record",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"userId\": \"6215fd08fbac200c61f979c8\",\n    \"department\": \"621493506ca26b9453f05442\",\n    \"year\": 2022,\n    \"semester\": 1,\n    \"absentDate\": \"2022-08-09\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{url}}/attendance/add",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"attendance",
-						"add"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Create batch",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"year\": \"2022\",\n    \"branch\": \"ME\",\n    \"department\": \"62187274532f115c1df75b2e\",\n    \"totalStudentsIntake\": 15\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{url}}/batch/create",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"batch",
-						"create"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Analytics to show list of batches",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "{{url}}/analytics/list-of-batches",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"analytics",
-						"list-of-batches"
-					]
-				}
-			},
-			"response": [
-				{
-					"name": "Saved Response : Analytics to show list of batches",
-					"originalRequest": {
+					"name": "Analytics to show list of batches",
+					"request": {
 						"method": "POST",
 						"header": [],
 						"url": {
@@ -243,93 +24,1063 @@
 							]
 						}
 					},
-					"status": "OK",
-					"code": 200,
-					"_postman_previewlanguage": "json",
-					"header": [
+					"response": [
 						{
-							"key": "Content-Security-Policy",
-							"value": "default-src 'self';base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+							"name": "Old Collection Saved Response : Analytics to show list of batches",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/analytics/list-of-batches",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"analytics",
+										"list-of-batches"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Embedder-Policy",
+									"value": "require-corp"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "Expect-CT",
+									"value": "max-age=0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1446"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"5a6-GLwj/THuweg91P6y9hck/0VMXp4\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 24 Feb 2022 12:04:58 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"_id\": 2019,\n        \"branches\": [\n            {\n                \"name\": \"CE\",\n                \"totalStudentsIntake\": 240\n            },\n            {\n                \"name\": \"ME\",\n                \"totalStudentsIntake\": 120\n            },\n            {\n                \"name\": \"EC\",\n                \"totalStudentsIntake\": 60\n            }\n        ],\n        \"totalStudents\": 420\n    },\n    {\n        \"_id\": 2020,\n        \"branches\": [\n            {\n                \"name\": \"CE\",\n                \"totalStudentsIntake\": 120\n            },\n            {\n                \"name\": \"ME\",\n                \"totalStudentsIntake\": 240\n            },\n            {\n                \"name\": \"EC\",\n                \"totalStudentsIntake\": 60\n            }\n        ],\n        \"totalStudents\": 420\n    },\n    {\n        \"_id\": 2021,\n        \"branches\": [\n            {\n                \"name\": \"CE\",\n                \"totalStudentsIntake\": 120\n            },\n            {\n                \"name\": \"ME\",\n                \"totalStudentsIntake\": 120\n            },\n            {\n                \"name\": \"EC\",\n                \"totalStudentsIntake\": 60\n            }\n        ],\n        \"totalStudents\": 300\n    },\n    {\n        \"_id\": 2024,\n        \"branches\": [\n            {\n                \"name\": \"CE\",\n                \"totalStudentsIntake\": 5,\n                \"startDate\": \"2022-02-24T11:26:25.388Z\",\n                \"isActive\": true,\n                \"_id\": \"62176b6d573c573f8c62d359\",\n                \"updatedAt\": \"2022-02-24T11:26:37.561Z\",\n                \"createdAt\": \"2022-02-24T11:26:37.561Z\"\n            },\n            {\n                \"name\": \"IT\",\n                \"totalStudentsIntake\": 5,\n                \"startDate\": \"2022-02-24T11:37:44.673Z\",\n                \"isActive\": true,\n                \"_id\": \"62176e11128c56edfdd0b88e\",\n                \"updatedAt\": \"2022-02-24T11:37:53.384Z\",\n                \"createdAt\": \"2022-02-24T11:37:53.384Z\"\n            }\n        ],\n        \"totalStudents\": 10\n    },\n    {\n        \"_id\": 2023,\n        \"branches\": [\n            {\n                \"name\": \"MCA\",\n                \"totalStudentsIntake\": 5,\n                \"startDate\": \"2022-02-24T10:37:35.770Z\",\n                \"isActive\": true,\n                \"_id\": \"6217601fd23958a822fbb52a\",\n                \"createdAt\": \"2022-02-24T10:38:23.133Z\",\n                \"updatedAt\": \"2022-02-24T10:38:23.133Z\"\n            }\n        ],\n        \"totalStudents\": 5\n    },\n    {\n        \"_id\": 2022,\n        \"branches\": [\n            {\n                \"name\": \"IT\",\n                \"totalStudentsIntake\": 0,\n                \"startDate\": \"2022-02-24T09:25:39.173Z\",\n                \"isActive\": true,\n                \"_id\": \"62174f14c1717fb685b6fe67\",\n                \"updatedAt\": \"2022-02-24T09:25:40.232Z\",\n                \"createdAt\": \"2022-02-24T09:25:40.232Z\"\n            }\n        ],\n        \"totalStudents\": 0\n    }\n]"
 						},
 						{
-							"key": "Cross-Origin-Embedder-Policy",
-							"value": "require-corp"
+							"name": "Saved Response : Analytics to show list of batches",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/analytics/list-of-batches",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"analytics",
+										"list-of-batches"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Embedder-Policy",
+									"value": "require-corp"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "Expect-CT",
+									"value": "max-age=0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "3108"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"c24-uP45Kgc8Z3gKYLuRQefaOiTGe2Q\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 28 Feb 2022 04:02:28 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"_id\": 2022,\n        \"branches\": [\n            {\n                \"name\": \"EC\",\n                \"department\": \"6214b673c16c8851c02e006d\",\n                \"totalStudentsIntake\": 3,\n                \"startDate\": \"2022-02-25T06:01:03.166Z\",\n                \"isActive\": true,\n                \"_id\": \"6218733f532f115c1df75b3f\",\n                \"updatedAt\": \"2022-02-25T06:12:15.674Z\",\n                \"createdAt\": \"2022-02-25T06:12:15.674Z\"\n            },\n            {\n                \"name\": \"CE\",\n                \"department\": \"6214e7034d2875028d282b43\",\n                \"totalStudentsIntake\": 3,\n                \"startDate\": \"2022-02-25T06:01:03.166Z\",\n                \"isActive\": true,\n                \"_id\": \"6218734f532f115c1df75b43\",\n                \"updatedAt\": \"2022-02-25T06:12:31.324Z\",\n                \"createdAt\": \"2022-02-25T06:12:31.324Z\"\n            },\n            {\n                \"name\": \"ME\",\n                \"department\": \"62187274532f115c1df75b2e\",\n                \"totalStudentsIntake\": 15,\n                \"startDate\": \"2022-02-25T06:01:03.166Z\",\n                \"isActive\": true,\n                \"_id\": \"621873a6532f115c1df75b5f\",\n                \"updatedAt\": \"2022-02-25T10:12:37.799Z\",\n                \"createdAt\": \"2022-02-25T06:13:58.704Z\"\n            }\n        ],\n        \"totalStudents\": 21\n    },\n    {\n        \"_id\": 2020,\n        \"branches\": [\n            {\n                \"name\": \"EC\",\n                \"department\": \"6214b673c16c8851c02e006d\",\n                \"totalStudentsIntake\": 3,\n                \"startDate\": \"2022-02-25T06:01:03.166Z\",\n                \"isActive\": true,\n                \"_id\": \"6218733a532f115c1df75b37\",\n                \"updatedAt\": \"2022-02-25T06:12:10.314Z\",\n                \"createdAt\": \"2022-02-25T06:12:10.314Z\"\n            },\n            {\n                \"name\": \"CE\",\n                \"department\": \"6214e7034d2875028d282b43\",\n                \"totalStudentsIntake\": 5,\n                \"startDate\": \"2022-02-25T06:01:03.166Z\",\n                \"isActive\": true,\n                \"_id\": \"6218736f532f115c1df75b4b\",\n                \"updatedAt\": \"2022-02-25T06:13:03.643Z\",\n                \"createdAt\": \"2022-02-25T06:13:03.643Z\"\n            },\n            {\n                \"name\": \"ME\",\n                \"department\": \"62187274532f115c1df75b2e\",\n                \"totalStudentsIntake\": 2,\n                \"startDate\": \"2022-02-25T06:01:03.166Z\",\n                \"isActive\": true,\n                \"_id\": \"62187396532f115c1df75b57\",\n                \"updatedAt\": \"2022-02-25T06:13:42.734Z\",\n                \"createdAt\": \"2022-02-25T06:13:42.734Z\"\n            }\n        ],\n        \"totalStudents\": 10\n    },\n    {\n        \"_id\": 2021,\n        \"branches\": [\n            {\n                \"name\": \"EC\",\n                \"department\": \"6214b673c16c8851c02e006d\",\n                \"totalStudentsIntake\": 3,\n                \"startDate\": \"2022-02-25T06:01:03.166Z\",\n                \"isActive\": true,\n                \"_id\": \"6218733c532f115c1df75b3b\",\n                \"updatedAt\": \"2022-02-25T06:12:12.805Z\",\n                \"createdAt\": \"2022-02-25T06:12:12.805Z\"\n            },\n            {\n                \"name\": \"CE\",\n                \"department\": \"6214e7034d2875028d282b43\",\n                \"totalStudentsIntake\": 2,\n                \"startDate\": \"2022-02-25T06:01:03.166Z\",\n                \"isActive\": true,\n                \"_id\": \"6218735e532f115c1df75b47\",\n                \"updatedAt\": \"2022-02-25T06:12:46.131Z\",\n                \"createdAt\": \"2022-02-25T06:12:46.131Z\"\n            },\n            {\n                \"name\": \"ME\",\n                \"department\": \"62187274532f115c1df75b2e\",\n                \"totalStudentsIntake\": 3,\n                \"startDate\": \"2022-02-25T06:01:03.166Z\",\n                \"isActive\": true,\n                \"_id\": \"6218739c532f115c1df75b5b\",\n                \"updatedAt\": \"2022-02-25T06:13:48.948Z\",\n                \"createdAt\": \"2022-02-25T06:13:48.948Z\"\n            }\n        ],\n        \"totalStudents\": 8\n    },\n    {\n        \"_id\": 2019,\n        \"branches\": [\n            {\n                \"name\": \"EC\",\n                \"department\": \"6214b673c16c8851c02e006d\",\n                \"totalStudentsIntake\": 3,\n                \"startDate\": \"2022-02-25T06:01:03.166Z\",\n                \"isActive\": true,\n                \"_id\": \"62187330532f115c1df75b33\",\n                \"updatedAt\": \"2022-02-25T06:12:00.315Z\",\n                \"createdAt\": \"2022-02-25T06:12:00.315Z\"\n            },\n            {\n                \"name\": \"CE\",\n                \"department\": \"6214e7034d2875028d282b43\",\n                \"totalStudentsIntake\": 1,\n                \"startDate\": \"2022-02-25T06:01:03.166Z\",\n                \"isActive\": true,\n                \"_id\": \"62187378532f115c1df75b4f\",\n                \"updatedAt\": \"2022-02-25T06:13:12.936Z\",\n                \"createdAt\": \"2022-02-25T06:13:12.936Z\"\n            },\n            {\n                \"name\": \"ME\",\n                \"department\": \"62187274532f115c1df75b2e\",\n                \"totalStudentsIntake\": 2,\n                \"startDate\": \"2022-02-25T06:01:03.166Z\",\n                \"isActive\": true,\n                \"_id\": \"62187390532f115c1df75b53\",\n                \"updatedAt\": \"2022-02-25T06:13:36.562Z\",\n                \"createdAt\": \"2022-02-25T06:13:36.562Z\"\n            }\n        ],\n        \"totalStudents\": 6\n    }\n]"
 						},
 						{
-							"key": "Cross-Origin-Opener-Policy",
-							"value": "same-origin"
+							"name": "Final saved response : Analytics to show list of batches",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/analytics/list-of-batches",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"analytics",
+										"list-of-batches"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Embedder-Policy",
+									"value": "require-corp"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "Expect-CT",
+									"value": "max-age=0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "3112"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"c28-vb+2c76ghkvohwpN9tkeBdETfAo\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 28 Feb 2022 10:55:26 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"branches\": [\n            {\n                \"name\": \"EC\",\n                \"department\": \"6214b673c16c8851c02e006d\",\n                \"totalStudentsIntake\": 3,\n                \"startDate\": \"2022-02-25T06:01:03.166Z\",\n                \"isActive\": true,\n                \"_id\": \"6218733f532f115c1df75b3f\",\n                \"updatedAt\": \"2022-02-25T06:12:15.674Z\",\n                \"createdAt\": \"2022-02-25T06:12:15.674Z\"\n            },\n            {\n                \"name\": \"CE\",\n                \"department\": \"6214e7034d2875028d282b43\",\n                \"totalStudentsIntake\": 3,\n                \"startDate\": \"2022-02-25T06:01:03.166Z\",\n                \"isActive\": true,\n                \"_id\": \"6218734f532f115c1df75b43\",\n                \"updatedAt\": \"2022-02-25T06:12:31.324Z\",\n                \"createdAt\": \"2022-02-25T06:12:31.324Z\"\n            },\n            {\n                \"name\": \"ME\",\n                \"department\": \"62187274532f115c1df75b2e\",\n                \"totalStudentsIntake\": 15,\n                \"startDate\": \"2022-02-25T06:01:03.166Z\",\n                \"isActive\": true,\n                \"_id\": \"621873a6532f115c1df75b5f\",\n                \"updatedAt\": \"2022-02-25T10:12:37.799Z\",\n                \"createdAt\": \"2022-02-25T06:13:58.704Z\"\n            }\n        ],\n        \"totalStudents\": 21,\n        \"year\": 2022\n    },\n    {\n        \"branches\": [\n            {\n                \"name\": \"EC\",\n                \"department\": \"6214b673c16c8851c02e006d\",\n                \"totalStudentsIntake\": 3,\n                \"startDate\": \"2022-02-25T06:01:03.166Z\",\n                \"isActive\": true,\n                \"_id\": \"6218733a532f115c1df75b37\",\n                \"updatedAt\": \"2022-02-25T06:12:10.314Z\",\n                \"createdAt\": \"2022-02-25T06:12:10.314Z\"\n            },\n            {\n                \"name\": \"CE\",\n                \"department\": \"6214e7034d2875028d282b43\",\n                \"totalStudentsIntake\": 5,\n                \"startDate\": \"2022-02-25T06:01:03.166Z\",\n                \"isActive\": true,\n                \"_id\": \"6218736f532f115c1df75b4b\",\n                \"updatedAt\": \"2022-02-25T06:13:03.643Z\",\n                \"createdAt\": \"2022-02-25T06:13:03.643Z\"\n            },\n            {\n                \"name\": \"ME\",\n                \"department\": \"62187274532f115c1df75b2e\",\n                \"totalStudentsIntake\": 2,\n                \"startDate\": \"2022-02-25T06:01:03.166Z\",\n                \"isActive\": true,\n                \"_id\": \"62187396532f115c1df75b57\",\n                \"updatedAt\": \"2022-02-25T06:13:42.734Z\",\n                \"createdAt\": \"2022-02-25T06:13:42.734Z\"\n            }\n        ],\n        \"totalStudents\": 10,\n        \"year\": 2020\n    },\n    {\n        \"branches\": [\n            {\n                \"name\": \"EC\",\n                \"department\": \"6214b673c16c8851c02e006d\",\n                \"totalStudentsIntake\": 3,\n                \"startDate\": \"2022-02-25T06:01:03.166Z\",\n                \"isActive\": true,\n                \"_id\": \"6218733c532f115c1df75b3b\",\n                \"updatedAt\": \"2022-02-25T06:12:12.805Z\",\n                \"createdAt\": \"2022-02-25T06:12:12.805Z\"\n            },\n            {\n                \"name\": \"CE\",\n                \"department\": \"6214e7034d2875028d282b43\",\n                \"totalStudentsIntake\": 2,\n                \"startDate\": \"2022-02-25T06:01:03.166Z\",\n                \"isActive\": true,\n                \"_id\": \"6218735e532f115c1df75b47\",\n                \"updatedAt\": \"2022-02-25T06:12:46.131Z\",\n                \"createdAt\": \"2022-02-25T06:12:46.131Z\"\n            },\n            {\n                \"name\": \"ME\",\n                \"department\": \"62187274532f115c1df75b2e\",\n                \"totalStudentsIntake\": 3,\n                \"startDate\": \"2022-02-25T06:01:03.166Z\",\n                \"isActive\": true,\n                \"_id\": \"6218739c532f115c1df75b5b\",\n                \"updatedAt\": \"2022-02-25T06:13:48.948Z\",\n                \"createdAt\": \"2022-02-25T06:13:48.948Z\"\n            }\n        ],\n        \"totalStudents\": 8,\n        \"year\": 2021\n    },\n    {\n        \"branches\": [\n            {\n                \"name\": \"EC\",\n                \"department\": \"6214b673c16c8851c02e006d\",\n                \"totalStudentsIntake\": 3,\n                \"startDate\": \"2022-02-25T06:01:03.166Z\",\n                \"isActive\": true,\n                \"_id\": \"62187330532f115c1df75b33\",\n                \"updatedAt\": \"2022-02-25T06:12:00.315Z\",\n                \"createdAt\": \"2022-02-25T06:12:00.315Z\"\n            },\n            {\n                \"name\": \"CE\",\n                \"department\": \"6214e7034d2875028d282b43\",\n                \"totalStudentsIntake\": 1,\n                \"startDate\": \"2022-02-25T06:01:03.166Z\",\n                \"isActive\": true,\n                \"_id\": \"62187378532f115c1df75b4f\",\n                \"updatedAt\": \"2022-02-25T06:13:12.936Z\",\n                \"createdAt\": \"2022-02-25T06:13:12.936Z\"\n            },\n            {\n                \"name\": \"ME\",\n                \"department\": \"62187274532f115c1df75b2e\",\n                \"totalStudentsIntake\": 2,\n                \"startDate\": \"2022-02-25T06:01:03.166Z\",\n                \"isActive\": true,\n                \"_id\": \"62187390532f115c1df75b53\",\n                \"updatedAt\": \"2022-02-25T06:13:36.562Z\",\n                \"createdAt\": \"2022-02-25T06:13:36.562Z\"\n            }\n        ],\n        \"totalStudents\": 6,\n        \"year\": 2019\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "list of absent students",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"year\": 2020,\n    \"date\": \"2022-01-09\",\n    \"semester\": 1,\n    \"department\": \"6214e7034d2875028d282b43\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/analytics/absent-students",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"analytics",
+								"absent-students"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "list of absent students",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"year\": 2020,\n    \"date\": \"2022-01-09\",\n    \"semester\": 1,\n    \"department\": \"6214e7034d2875028d282b43\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/analytics/absent-students",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"analytics",
+										"absent-students"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Embedder-Policy",
+									"value": "require-corp"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "Expect-CT",
+									"value": "max-age=0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "36"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"24-4so8rCZUtMnL+RK6qr31W0xFIKI\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 28 Feb 2022 07:47:23 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"name\": \"Deva\"\n    },\n    {\n        \"name\": \"Swati T\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "list of students below 75 attendance",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"year\": 2020,\n    \"semester\":1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/analytics/below-75-attendance",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"analytics",
+								"below-75-attendance"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "with depratment : list of students below 75 attendance",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"year\": 2020,\n    \"semester\":1,\n    \"department\": \"6214e7034d2875028d282b43\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/analytics/below-75-attendance",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"analytics",
+										"below-75-attendance"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Embedder-Policy",
+									"value": "require-corp"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "Expect-CT",
+									"value": "max-age=0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "99"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"63-rucsj0ZQv87evVGrjK4DQr6LacQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 28 Feb 2022 04:00:55 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"absentDays\": 115,\n        \"_id\": [\n            \"62189d74d849f7d242132fa0\",\n            \"Deva\"\n        ],\n        \"absentPercentage\": 82.14285714285714\n    }\n]"
 						},
 						{
-							"key": "Cross-Origin-Resource-Policy",
-							"value": "same-origin"
-						},
+							"name": "without department : list of students below 75 attendance",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"year\": 2020,\n    \"semester\":1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/analytics/below-75-attendance",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"analytics",
+										"below-75-attendance"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Embedder-Policy",
+									"value": "require-corp"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "Expect-CT",
+									"value": "max-age=0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "99"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"63-rucsj0ZQv87evVGrjK4DQr6LacQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 28 Feb 2022 04:02:02 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"absentDays\": 115,\n        \"_id\": [\n            \"62189d74d849f7d242132fa0\",\n            \"Deva\"\n        ],\n        \"absentPercentage\": 82.14285714285714\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Analytics to show vacant seats",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/analytics/vacant-seats",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"analytics",
+								"vacant-seats"
+							]
+						}
+					},
+					"response": [
 						{
-							"key": "X-DNS-Prefetch-Control",
-							"value": "off"
+							"name": "Saved Response: Analytics to show vacant seats",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/analytics/vacant-seats",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"analytics",
+										"vacant-seats"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Security-Policy",
+									"value": "default-src 'self';base-uri 'self';block-all-mixed-content;font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests"
+								},
+								{
+									"key": "Cross-Origin-Embedder-Policy",
+									"value": "require-corp"
+								},
+								{
+									"key": "Cross-Origin-Opener-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "Cross-Origin-Resource-Policy",
+									"value": "same-origin"
+								},
+								{
+									"key": "X-DNS-Prefetch-Control",
+									"value": "off"
+								},
+								{
+									"key": "Expect-CT",
+									"value": "max-age=0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Strict-Transport-Security",
+									"value": "max-age=15552000; includeSubDomains"
+								},
+								{
+									"key": "X-Download-Options",
+									"value": "noopen"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Origin-Agent-Cluster",
+									"value": "?1"
+								},
+								{
+									"key": "X-Permitted-Cross-Domain-Policies",
+									"value": "none"
+								},
+								{
+									"key": "Referrer-Policy",
+									"value": "no-referrer"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "3293"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"cdd-FYWGIYBmLpoUwswT992k5XMTp6E\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 28 Feb 2022 07:42:20 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"totalStudentsIntake\": 21,\n        \"batch\": 2022,\n        \"branches\": [\n            {\n                \"name\": \"EC\",\n                \"department\": \"6214b673c16c8851c02e006d\",\n                \"totalStudentsIntake\": 3,\n                \"startDate\": \"2022-02-25T06:01:03.166Z\",\n                \"isActive\": true,\n                \"_id\": \"6218733f532f115c1df75b3f\",\n                \"updatedAt\": \"2022-02-25T06:12:15.674Z\",\n                \"createdAt\": \"2022-02-25T06:12:15.674Z\"\n            },\n            {\n                \"name\": \"CE\",\n                \"department\": \"6214e7034d2875028d282b43\",\n                \"totalStudentsIntake\": 3,\n                \"startDate\": \"2022-02-25T06:01:03.166Z\",\n                \"isActive\": true,\n                \"_id\": \"6218734f532f115c1df75b43\",\n                \"updatedAt\": \"2022-02-25T06:12:31.324Z\",\n                \"createdAt\": \"2022-02-25T06:12:31.324Z\"\n            },\n            {\n                \"name\": \"ME\",\n                \"department\": \"62187274532f115c1df75b2e\",\n                \"totalStudentsIntake\": 15,\n                \"startDate\": \"2022-02-25T06:01:03.166Z\",\n                \"isActive\": true,\n                \"_id\": \"621873a6532f115c1df75b5f\",\n                \"updatedAt\": \"2022-02-25T10:12:37.799Z\",\n                \"createdAt\": \"2022-02-25T06:13:58.704Z\"\n            }\n        ],\n        \"totalStudents\": 0,\n        \"availableIntake\": 21\n    },\n    {\n        \"totalStudentsIntake\": 10,\n        \"batch\": 2020,\n        \"branches\": [\n            {\n                \"name\": \"EC\",\n                \"department\": \"6214b673c16c8851c02e006d\",\n                \"totalStudentsIntake\": 3,\n                \"startDate\": \"2022-02-25T06:01:03.166Z\",\n                \"isActive\": true,\n                \"_id\": \"6218733a532f115c1df75b37\",\n                \"updatedAt\": \"2022-02-25T06:12:10.314Z\",\n                \"createdAt\": \"2022-02-25T06:12:10.314Z\"\n            },\n            {\n                \"name\": \"CE\",\n                \"department\": \"6214e7034d2875028d282b43\",\n                \"totalStudentsIntake\": 5,\n                \"startDate\": \"2022-02-25T06:01:03.166Z\",\n                \"isActive\": true,\n                \"_id\": \"6218736f532f115c1df75b4b\",\n                \"updatedAt\": \"2022-02-25T06:13:03.643Z\",\n                \"createdAt\": \"2022-02-25T06:13:03.643Z\"\n            },\n            {\n                \"name\": \"ME\",\n                \"department\": \"62187274532f115c1df75b2e\",\n                \"totalStudentsIntake\": 2,\n                \"startDate\": \"2022-02-25T06:01:03.166Z\",\n                \"isActive\": true,\n                \"_id\": \"62187396532f115c1df75b57\",\n                \"updatedAt\": \"2022-02-25T06:13:42.734Z\",\n                \"createdAt\": \"2022-02-25T06:13:42.734Z\"\n            }\n        ],\n        \"totalStudents\": 7,\n        \"availableIntake\": 3\n    },\n    {\n        \"totalStudentsIntake\": 8,\n        \"batch\": 2021,\n        \"branches\": [\n            {\n                \"name\": \"EC\",\n                \"department\": \"6214b673c16c8851c02e006d\",\n                \"totalStudentsIntake\": 3,\n                \"startDate\": \"2022-02-25T06:01:03.166Z\",\n                \"isActive\": true,\n                \"_id\": \"6218733c532f115c1df75b3b\",\n                \"updatedAt\": \"2022-02-25T06:12:12.805Z\",\n                \"createdAt\": \"2022-02-25T06:12:12.805Z\"\n            },\n            {\n                \"name\": \"CE\",\n                \"department\": \"6214e7034d2875028d282b43\",\n                \"totalStudentsIntake\": 2,\n                \"startDate\": \"2022-02-25T06:01:03.166Z\",\n                \"isActive\": true,\n                \"_id\": \"6218735e532f115c1df75b47\",\n                \"updatedAt\": \"2022-02-25T06:12:46.131Z\",\n                \"createdAt\": \"2022-02-25T06:12:46.131Z\"\n            },\n            {\n                \"name\": \"ME\",\n                \"department\": \"62187274532f115c1df75b2e\",\n                \"totalStudentsIntake\": 3,\n                \"startDate\": \"2022-02-25T06:01:03.166Z\",\n                \"isActive\": true,\n                \"_id\": \"6218739c532f115c1df75b5b\",\n                \"updatedAt\": \"2022-02-25T06:13:48.948Z\",\n                \"createdAt\": \"2022-02-25T06:13:48.948Z\"\n            }\n        ],\n        \"totalStudents\": 0,\n        \"availableIntake\": 8\n    },\n    {\n        \"totalStudentsIntake\": 6,\n        \"batch\": 2019,\n        \"branches\": [\n            {\n                \"name\": \"EC\",\n                \"department\": \"6214b673c16c8851c02e006d\",\n                \"totalStudentsIntake\": 3,\n                \"startDate\": \"2022-02-25T06:01:03.166Z\",\n                \"isActive\": true,\n                \"_id\": \"62187330532f115c1df75b33\",\n                \"updatedAt\": \"2022-02-25T06:12:00.315Z\",\n                \"createdAt\": \"2022-02-25T06:12:00.315Z\"\n            },\n            {\n                \"name\": \"CE\",\n                \"department\": \"6214e7034d2875028d282b43\",\n                \"totalStudentsIntake\": 1,\n                \"startDate\": \"2022-02-25T06:01:03.166Z\",\n                \"isActive\": true,\n                \"_id\": \"62187378532f115c1df75b4f\",\n                \"updatedAt\": \"2022-02-25T06:13:12.936Z\",\n                \"createdAt\": \"2022-02-25T06:13:12.936Z\"\n            },\n            {\n                \"name\": \"ME\",\n                \"department\": \"62187274532f115c1df75b2e\",\n                \"totalStudentsIntake\": 2,\n                \"startDate\": \"2022-02-25T06:01:03.166Z\",\n                \"isActive\": true,\n                \"_id\": \"62187390532f115c1df75b53\",\n                \"updatedAt\": \"2022-02-25T06:13:36.562Z\",\n                \"createdAt\": \"2022-02-25T06:13:36.562Z\"\n            }\n        ],\n        \"totalStudents\": 1,\n        \"availableIntake\": 5\n    }\n]"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "students",
+			"item": [
+				{
+					"name": "Add student",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Faltu\",\n    \"department\": \"6214e7034d2875028d282b43\",\n    \"year\": 2019,\n    \"semester\": 1,\n    \"mobile\": 4611035228,\n    \"address\": \"Rajkot\",\n    \"UIDAI\": 214560689111\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
-						{
-							"key": "Expect-CT",
-							"value": "max-age=0"
+						"url": {
+							"raw": "{{url}}/student/add",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"student",
+								"add"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Attendance",
+			"item": [
+				{
+					"name": "Add attendance absent record",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": \"6215fd08fbac200c61f979c8\",\n    \"department\": \"621493506ca26b9453f05442\",\n    \"year\": 2022,\n    \"semester\": 1,\n    \"absentDate\": \"2022-08-09\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
-						{
-							"key": "X-Frame-Options",
-							"value": "SAMEORIGIN"
+						"url": {
+							"raw": "{{url}}/attendance/add",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"attendance",
+								"add"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Create staff user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"joshi\",\n    \"department\": \"CE\",\n    \"email\": \"joshi@gmail.com\",\n    \"isActive\": true,\n    \"isAdmin\": \"false\",\n    \"password\": \"Kevit@Rajkot2022\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
+						"url": {
+							"raw": "{{url}}/user/create",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Signin staff user",
+					"event": [
 						{
-							"key": "Strict-Transport-Security",
-							"value": "max-age=15552000; includeSubDomains"
-						},
-						{
-							"key": "X-Download-Options",
-							"value": "noopen"
-						},
-						{
-							"key": "X-Content-Type-Options",
-							"value": "nosniff"
-						},
-						{
-							"key": "Origin-Agent-Cluster",
-							"value": "?1"
-						},
-						{
-							"key": "X-Permitted-Cross-Domain-Policies",
-							"value": "none"
-						},
-						{
-							"key": "Referrer-Policy",
-							"value": "no-referrer"
-						},
-						{
-							"key": "X-XSS-Protection",
-							"value": "0"
-						},
-						{
-							"key": "Content-Type",
-							"value": "application/json; charset=utf-8"
-						},
-						{
-							"key": "Content-Length",
-							"value": "1446"
-						},
-						{
-							"key": "ETag",
-							"value": "W/\"5a6-GLwj/THuweg91P6y9hck/0VMXp4\""
-						},
-						{
-							"key": "Date",
-							"value": "Thu, 24 Feb 2022 12:04:58 GMT"
-						},
-						{
-							"key": "Connection",
-							"value": "keep-alive"
-						},
-						{
-							"key": "Keep-Alive",
-							"value": "timeout=5"
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if(pm.response.code === 200){",
+									"    pm.environment.set('authToken',pm.response.json().accessToken)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
 						}
 					],
-					"cookie": [],
-					"body": "[\n    {\n        \"_id\": 2019,\n        \"branches\": [\n            {\n                \"name\": \"CE\",\n                \"totalStudentsIntake\": 240\n            },\n            {\n                \"name\": \"ME\",\n                \"totalStudentsIntake\": 120\n            },\n            {\n                \"name\": \"EC\",\n                \"totalStudentsIntake\": 60\n            }\n        ],\n        \"totalStudents\": 420\n    },\n    {\n        \"_id\": 2020,\n        \"branches\": [\n            {\n                \"name\": \"CE\",\n                \"totalStudentsIntake\": 120\n            },\n            {\n                \"name\": \"ME\",\n                \"totalStudentsIntake\": 240\n            },\n            {\n                \"name\": \"EC\",\n                \"totalStudentsIntake\": 60\n            }\n        ],\n        \"totalStudents\": 420\n    },\n    {\n        \"_id\": 2021,\n        \"branches\": [\n            {\n                \"name\": \"CE\",\n                \"totalStudentsIntake\": 120\n            },\n            {\n                \"name\": \"ME\",\n                \"totalStudentsIntake\": 120\n            },\n            {\n                \"name\": \"EC\",\n                \"totalStudentsIntake\": 60\n            }\n        ],\n        \"totalStudents\": 300\n    },\n    {\n        \"_id\": 2024,\n        \"branches\": [\n            {\n                \"name\": \"CE\",\n                \"totalStudentsIntake\": 5,\n                \"startDate\": \"2022-02-24T11:26:25.388Z\",\n                \"isActive\": true,\n                \"_id\": \"62176b6d573c573f8c62d359\",\n                \"updatedAt\": \"2022-02-24T11:26:37.561Z\",\n                \"createdAt\": \"2022-02-24T11:26:37.561Z\"\n            },\n            {\n                \"name\": \"IT\",\n                \"totalStudentsIntake\": 5,\n                \"startDate\": \"2022-02-24T11:37:44.673Z\",\n                \"isActive\": true,\n                \"_id\": \"62176e11128c56edfdd0b88e\",\n                \"updatedAt\": \"2022-02-24T11:37:53.384Z\",\n                \"createdAt\": \"2022-02-24T11:37:53.384Z\"\n            }\n        ],\n        \"totalStudents\": 10\n    },\n    {\n        \"_id\": 2023,\n        \"branches\": [\n            {\n                \"name\": \"MCA\",\n                \"totalStudentsIntake\": 5,\n                \"startDate\": \"2022-02-24T10:37:35.770Z\",\n                \"isActive\": true,\n                \"_id\": \"6217601fd23958a822fbb52a\",\n                \"createdAt\": \"2022-02-24T10:38:23.133Z\",\n                \"updatedAt\": \"2022-02-24T10:38:23.133Z\"\n            }\n        ],\n        \"totalStudents\": 5\n    },\n    {\n        \"_id\": 2022,\n        \"branches\": [\n            {\n                \"name\": \"IT\",\n                \"totalStudentsIntake\": 0,\n                \"startDate\": \"2022-02-24T09:25:39.173Z\",\n                \"isActive\": true,\n                \"_id\": \"62174f14c1717fb685b6fe67\",\n                \"updatedAt\": \"2022-02-24T09:25:40.232Z\",\n                \"createdAt\": \"2022-02-24T09:25:40.232Z\"\n            }\n        ],\n        \"totalStudents\": 0\n    }\n]"
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"devang.garach@kevit.io\",\n    \"password\": \"Kevit@Rajkot2022\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/signIn",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"signIn"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Department & Batches",
+			"item": [
+				{
+					"name": "Create batch",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"year\": \"2022\",\n    \"branch\": \"ME\",\n    \"department\": \"62187274532f115c1df75b2e\",\n    \"totalStudentsIntake\": 15\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/batch/create",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"batch",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create department",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n     \"name\": \"ME\",\n     \"batches\": {\n         \"year\": 2022,\n         \"totalIntake\": 5\n     }\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/department/create",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"department",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update department",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n     \"name\": \"CE\",\n     \"batches\": {\n         \"year\": 2022,\n         \"totalIntake\": 2\n     }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/department/update",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"department",
+								"update"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

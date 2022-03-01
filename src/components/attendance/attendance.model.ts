@@ -29,6 +29,8 @@ export interface AttendanceDocument extends Document {
   absentDate: Date | number;
   reason: string;
   isStudent: boolean;
+  year: number;
+  semester: number;
 }
 export interface AttendanceModel extends Model<AttendanceDocument> {}
 const attendanceSchema: Schema = new Schema({
@@ -64,20 +66,13 @@ const attendanceSchema: Schema = new Schema({
 // Pre hook before saving it execute
 // ===================================
 attendanceSchema.pre('save', async function (next) {
-  const student: any = this;
-  console.log('attendance inside pre', student);
-
+  const student = this;
   next();
 });
 
 attendanceSchema.methods.toJSON = function () {
   const attendance = this;
-  // console.log("student u",student);
   const attendanceObject = attendance.toObject();
-  // console.log("attendanceObject",attendanceObject)
-  // delete attendanceObject.password;
-  // delete attendanceObject.avatar;
-  // console.log("after update",attendanceObject)
   return attendanceObject;
 };
 

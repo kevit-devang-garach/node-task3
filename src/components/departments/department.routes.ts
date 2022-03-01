@@ -12,7 +12,6 @@ class DepartmentRoute {
   departmentController = new DepartmentController();
 
   constructor() {
-    console.log('Department Route Contructor');
     this.initializeRoutes();
   }
 

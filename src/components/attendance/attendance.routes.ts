@@ -1,5 +1,4 @@
 import { Router } from "express";
-// import Attendance from "./attendance.model";
 import AttedanceController from "./attendance.controller";
 import { authenticateMiddleware} from "../../middleware/auth.middleware";
 import { validateRequestMiddleware } from "../../middleware/error.middleware";
@@ -11,7 +10,6 @@ class Attendance {
 
     attendanceController = new AttedanceController();
     constructor(){
-        console.log("Attendance Route Constructor");
         this.initializeRoutes()
     }
     initializeRoutes(){

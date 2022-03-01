@@ -1,13 +1,10 @@
 import HttpException from "../../utils/error.utils";
 import { BATCHES_ERROR_CODES } from "./batch.error";
-import Batches from "./batch.model";
+import Batches, { BatchDocument } from "./batch.model";
 export async function createNewBatch(batchBody: any){
     try{
-        console.log("createNewBatch")
-        console.log("inside if condition")
         return await updateBranches(batchBody);     
     }catch(err){
-        console.log("error in catch new create batch");
         throw new HttpException(
             500,
             BATCHES_ERROR_CODES.CREATE_BATCH_UNHANDLED_IN_DB,
@@ -18,7 +15,7 @@ export async function createNewBatch(batchBody: any){
     }
 }
 
-export async function findBatchById(batchId: any) {
+export async function findBatchById(batchId: Pick<BatchDocument, "_id">) {
     try {
       return await Batches.findById(batchId).lean();
     } catch (err) {
@@ -27,11 +24,8 @@ export async function findBatchById(batchId: any) {
 }
 
   export async function updateBranches(batchBody: any) {
-    console.log('inside update department dal', batchBody);
     const found = await Batches.find({year: batchBody.year, branches: { $elemMatch: { department: batchBody.branches.department } }}).lean()
-    console.log("found",found, found.length)
     if(!found.length){
-        console.log("if")
         return await Batches.updateOne({
             year: batchBody.year
         }, 
@@ -43,7 +37,6 @@ export async function findBatchById(batchId: any) {
         })
     }
     else{
-        console.log("else")
         return await Batches.updateOne(
             {
                 year: batchBody.year,
@@ -51,6 +44,6 @@ export async function findBatchById(batchId: any) {
               },
               { $set: { 'branches.$.totalStudentsIntake': batchBody.branches.totalStudentsIntake } },
               { upsert: true, new: true }
-        ) 
+        ).lean();
     }
   }
