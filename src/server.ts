@@ -16,8 +16,8 @@ const app = new App([
 ]);
 
 app.listen();
-
 export default app;
+// module.exports =  app;
 
 // import { encap } from './services/helper';
 // (async function run () {

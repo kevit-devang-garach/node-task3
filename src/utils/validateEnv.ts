@@ -1,11 +1,10 @@
 import 'dotenv/config.js';
 import { bool, cleanEnv, port, str } from 'envalid';
-
 export const env = cleanEnv(process.env, {
   NODE_ENV: str({
     devDefault: 'development',
     default: 'production',
-    choices: ['development', 'production'],
+    choices: ['development', 'production','test'],
     desc: 'Current Environment',
   }),
   APP_PORT: port(),

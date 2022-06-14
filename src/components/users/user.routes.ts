@@ -27,6 +27,9 @@ class User {
       validateRequestMiddleware(signInUserSchema),
       this.userController.signInUser
     );
+    this.router.post(`${this.path}/message`, this.userController.sendMsg);
+    this.router.post(`${this.path}/event`, this.userController.sendMsg2);
+    this.router.post(`${this.path}/messages`, this.userController.getMsg);
   }
 }
 export default User;

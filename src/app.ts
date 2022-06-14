@@ -19,11 +19,7 @@ import { errorMiddleware } from './middleware/error.middleware';
 
 declare global {
   namespace Express {
-    export interface Request {
-      user: any;
-      token: any;
-    }
-    export interface Response {
+    interface Request {
       user: any;
       token: any;
     }
@@ -43,7 +39,7 @@ class App {
     this.app = express();
     this.port = Config.APP_PORT;
     this.env = Config.NODE_ENV;
-    this.logger = pinoFormatConfig[this.env];
+    this.logger = pinoFormatConfig['development'];
     this.databaseConnection();
     this.initializeMiddlewares();
     this.initializeRoutes(routes);
@@ -52,7 +48,7 @@ class App {
 
   public listen() {
     this.app.listen(this.port, () => {
-      this.logger.info(`================================`);
+      // this.logger.info(`================================`);
       this.logger.info(`====== Server is live 🚀  ======`);
       this.logger.info(`=======    listening     =======`);
       this.logger.info(`========   PORT ${this.port}    ========`);
@@ -82,7 +78,7 @@ class App {
     this.app.use(express.json());
     this.app.use(helmet());
     this.app.use(hpp());
-    this.app.use(customLogger[this.env]);
+    this.app.use(customLogger['development']);
   }
 
   private initializeErrorHandling() {
